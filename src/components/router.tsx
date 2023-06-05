@@ -33,7 +33,7 @@ export class AppRouter implements ComponentInterface {
           {
             db: this.db,
             type: 'firebase',
-            url: 'https://deadbydaylight.group/api',
+            url: '',
           },
         ],
       })
