@@ -9,9 +9,6 @@ www/
 *.tmp
 *.tmp.*
 log.txt
-*.sublime-project
-*.sublime-workspace
-service-account.json
 
 .stencil/
 .idea/
@@ -25,7 +22,20 @@ $RECYCLE.BIN/
 .DS_Store
 Thumbs.db
 UserInterfaceState.xcuserstate
-.env
+
+# Logs
+logs
+*.log
+npm-debug.log*
+firebase-debug.log*
+firebase-debug.*.log*
+service-account.json
+environment.json
+src/sw.js
+
+# Firebase cache
+.firebase/
+
 # dotenv environment variables file
 .env
 
