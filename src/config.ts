@@ -1,6 +1,6 @@
 export default {
-  env: 'local',
-  url: 'http://localhost:3333',
+  env: 'live',
+  url: 'http://https://chat-app-167c0.web.app/:3333',
   firebaseConfig: {
     apiKey: 'AIzaSyCkdsIl7Z0Aa5uC_wyOTD0kCjCLq7F6_Ec',
     authDomain: 'chat-app-167c0.firebaseapp.com',
