@@ -11,6 +11,7 @@ www/
 log.txt
 *.sublime-project
 *.sublime-workspace
+service-account.json
 
 .stencil/
 .idea/
@@ -25,3 +26,7 @@ $RECYCLE.BIN/
 Thumbs.db
 UserInterfaceState.xcuserstate
 .env
+# dotenv environment variables file
+.env
+
+.history/

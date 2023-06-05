@@ -5,9 +5,9 @@ describe('Set User Claims', () => {
   connectFirestore({
     serviceAccount: true,
   });
-  it('Should Set a user&#x27;s claims on Firebase Auth', async () => {
+  it('Should Set a users claims on Firebase Auth', async () => {
     const response = await setUserClaims({
-      userId: 'bZopNAQgkrOM64fwa3upceACPoJ3',
+      userId: 'bJNinURh0UNITOYqc055650re2S2',
       claims: {
         role: 'tech',
         admin: true,
@@ -15,6 +15,6 @@ describe('Set User Claims', () => {
       },
     });
     console.log(response);
-    expect(response).toMatchObject({ uid: 'bZopNAQgkrOM64fwa3upceACPoJ3' });
+    expect(response).toMatchObject({ uid: 'bJNinURh0UNITOYqc055650re2S2' });
   });
 });
