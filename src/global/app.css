@@ -38,8 +38,6 @@
   https://ionicframework.com/docs/theming/color-generator
 */
 
-@import './variables.css';
-
 :root {
   --ion-color-primary: #3880ff;
   --ion-color-primary-rgb: 56, 128, 255;
