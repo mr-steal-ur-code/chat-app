@@ -27,3 +27,19 @@ export interface User {
   photo?: string;
   createdAt?: Timestamp;
 }
+
+export interface Message {
+  id?: string;
+  createdBy?: User;
+  createdAt?: Timestamp;
+  text?: string;
+}
+
+export interface Room {
+  id?: string;
+  name?: string;
+  type?: 'voice' | 'text';
+  icon?: any;
+  createdBy?: User;
+  createdAt?: Timestamp;
+}

@@ -1,0 +1,5 @@
+ion-menu {
+    --side-min-width: 300px !important;
+    --side-max-width: 300px !important;
+    --width: 300px !important;
+}

@@ -82,19 +82,20 @@ export class AppRouter implements ComponentInterface {
           console.log('User document already exists');
         }
       }
+      const routerEl = document.querySelector('ion-router');
+      if (!routerEl) return;
+      routerEl.push('/chat');
     });
   }
 
   render() {
-    return (
-      <ion-app>
-        <ion-router useHash={false}>
-          <ion-route url="/" component="page-home" componentProps={this.componentProps} />
-          <ion-route url="/chat" component="page-chat-list"></ion-route>
-          <ion-route url="/chat/:chatId" component="page-chat"></ion-route>
-        </ion-router>
-        <ion-nav></ion-nav>
-      </ion-app>
-    );
+    return [
+      <ion-router useHash={false}>
+        <ion-route url="/" component="page-home" componentProps={this.componentProps} />
+        <ion-route url="/chat" component="page-chat-list"></ion-route>
+        <ion-route url="/chat/:chatId" component="page-chat"></ion-route>
+      </ion-router>,
+      <rooms-app />,
+    ];
   }
 }
