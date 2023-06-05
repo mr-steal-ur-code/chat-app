@@ -5,43 +5,49 @@
  * It contains typing information for all components that exist in this project.
  */
 import { HTMLStencilElement, JSXBase } from "@stencil/core/internal";
+import { AuthService, DatabaseService } from "@fireenjin/sdk";
+export { AuthService, DatabaseService } from "@fireenjin/sdk";
 export namespace Components {
-    interface AppRoot {
+    interface AppRouter {
     }
-    interface AppTabs {
+    interface ModalLogin {
+        "auth": AuthService;
+        "userId": any;
     }
     interface PageHome {
-    }
-    interface PageNotice {
+        "auth": AuthService;
+        "db": DatabaseService;
     }
     interface PageProfile {
         "name": string;
     }
 }
+export interface ModalLoginCustomEvent<T> extends CustomEvent<T> {
+    detail: T;
+    target: HTMLModalLoginElement;
+}
+export interface PageHomeCustomEvent<T> extends CustomEvent<T> {
+    detail: T;
+    target: HTMLPageHomeElement;
+}
 declare global {
-    interface HTMLAppRootElement extends Components.AppRoot, HTMLStencilElement {
+    interface HTMLAppRouterElement extends Components.AppRouter, HTMLStencilElement {
     }
-    var HTMLAppRootElement: {
-        prototype: HTMLAppRootElement;
-        new (): HTMLAppRootElement;
+    var HTMLAppRouterElement: {
+        prototype: HTMLAppRouterElement;
+        new (): HTMLAppRouterElement;
     };
-    interface HTMLAppTabsElement extends Components.AppTabs, HTMLStencilElement {
+    interface HTMLModalLoginElement extends Components.ModalLogin, HTMLStencilElement {
     }
-    var HTMLAppTabsElement: {
-        prototype: HTMLAppTabsElement;
-        new (): HTMLAppTabsElement;
+    var HTMLModalLoginElement: {
+        prototype: HTMLModalLoginElement;
+        new (): HTMLModalLoginElement;
     };
     interface HTMLPageHomeElement extends Components.PageHome, HTMLStencilElement {
     }
     var HTMLPageHomeElement: {
         prototype: HTMLPageHomeElement;
         new (): HTMLPageHomeElement;
-    };
-    interface HTMLPageNoticeElement extends Components.PageNotice, HTMLStencilElement {
-    }
-    var HTMLPageNoticeElement: {
-        prototype: HTMLPageNoticeElement;
-        new (): HTMLPageNoticeElement;
     };
     interface HTMLPageProfileElement extends Components.PageProfile, HTMLStencilElement {
     }
@@ -50,30 +56,32 @@ declare global {
         new (): HTMLPageProfileElement;
     };
     interface HTMLElementTagNameMap {
-        "app-root": HTMLAppRootElement;
-        "app-tabs": HTMLAppTabsElement;
+        "app-router": HTMLAppRouterElement;
+        "modal-login": HTMLModalLoginElement;
         "page-home": HTMLPageHomeElement;
-        "page-notice": HTMLPageNoticeElement;
         "page-profile": HTMLPageProfileElement;
     }
 }
 declare namespace LocalJSX {
-    interface AppRoot {
+    interface AppRouter {
     }
-    interface AppTabs {
+    interface ModalLogin {
+        "auth"?: AuthService;
+        "onPbModalClose"?: (event: ModalLoginCustomEvent<any>) => void;
+        "userId"?: any;
     }
     interface PageHome {
-    }
-    interface PageNotice {
+        "auth"?: AuthService;
+        "db"?: DatabaseService;
+        "onChatModalOpen"?: (event: PageHomeCustomEvent<any>) => void;
     }
     interface PageProfile {
         "name"?: string;
     }
     interface IntrinsicElements {
-        "app-root": AppRoot;
-        "app-tabs": AppTabs;
+        "app-router": AppRouter;
+        "modal-login": ModalLogin;
         "page-home": PageHome;
-        "page-notice": PageNotice;
         "page-profile": PageProfile;
     }
 }
@@ -81,10 +89,9 @@ export { LocalJSX as JSX };
 declare module "@stencil/core" {
     export namespace JSX {
         interface IntrinsicElements {
-            "app-root": LocalJSX.AppRoot & JSXBase.HTMLAttributes<HTMLAppRootElement>;
-            "app-tabs": LocalJSX.AppTabs & JSXBase.HTMLAttributes<HTMLAppTabsElement>;
+            "app-router": LocalJSX.AppRouter & JSXBase.HTMLAttributes<HTMLAppRouterElement>;
+            "modal-login": LocalJSX.ModalLogin & JSXBase.HTMLAttributes<HTMLModalLoginElement>;
             "page-home": LocalJSX.PageHome & JSXBase.HTMLAttributes<HTMLPageHomeElement>;
-            "page-notice": LocalJSX.PageNotice & JSXBase.HTMLAttributes<HTMLPageNoticeElement>;
             "page-profile": LocalJSX.PageProfile & JSXBase.HTMLAttributes<HTMLPageProfileElement>;
         }
     }
