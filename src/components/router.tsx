@@ -5,6 +5,8 @@ import env from '../helpers/env';
 import state from '../global/store';
 import pick from '../helpers/pick';
 import { modalController } from '@ionic/core';
+import UserModel from '../models/user';
+import { User } from '../interfaces';
 @Component({
   tag: 'app-router',
 })
@@ -13,11 +15,6 @@ export class AppRouter implements ComponentInterface {
   auth = Build.isBrowser
     ? new AuthService({
         app: this.app,
-        config: {
-          tokenLocalStorageKey: 'madnessdev:token',
-          authLocalStorageKey: 'madnessdev:session',
-          emulate: false,
-        },
       })
     : null;
   db = Build.isBrowser
@@ -33,7 +30,7 @@ export class AppRouter implements ComponentInterface {
           {
             db: this.db,
             type: 'firebase',
-            url: '',
+            url: 'https://chat-app-167c0.web.app/',
           },
         ],
       })
@@ -56,14 +53,19 @@ export class AppRouter implements ComponentInterface {
     await this.modal.present();
   }
 
-  @Listen('pbModalClose', { target: 'document' })
+  @Listen('chatModalClose', { target: 'document' })
   async closeModal() {
     this.modal.dismiss();
+  }
+
+  async getProfile() {
+    state.profile = (await new UserModel(this.db).find(state?.session?.uid)) || ([] as User);
   }
 
   componentWillLoad() {
     this.auth.onAuthChanged(async session => {
       state.session = session;
+      this.getProfile();
       state.claims = session?.uid
         ? (pick(await this.auth.getClaims(), ['admin', 'tester', 'role']) as {
             admin: boolean;

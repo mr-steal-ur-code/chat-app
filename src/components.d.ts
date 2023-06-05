@@ -67,7 +67,7 @@ declare namespace LocalJSX {
     }
     interface ModalLogin {
         "auth"?: AuthService;
-        "onPbModalClose"?: (event: ModalLoginCustomEvent<any>) => void;
+        "onChatModalClose"?: (event: ModalLoginCustomEvent<any>) => void;
         "userId"?: any;
     }
     interface PageHome {

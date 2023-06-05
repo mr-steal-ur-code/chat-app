@@ -31,7 +31,7 @@ export class ModalLogin implements ComponentInterface {
       });
     }
     console.log(res);
-    this.pbModalClose.emit();
+    this.chatModalClose.emit();
     this.presentToast();
   }
 
@@ -44,14 +44,14 @@ export class ModalLogin implements ComponentInterface {
   }
 
   @Event()
-  pbModalClose: EventEmitter;
+  chatModalClose: EventEmitter;
 
   @Prop() userId: any;
 
   closeModal(event: MouseEvent) {
     event.preventDefault();
     event.stopImmediatePropagation();
-    this.pbModalClose.emit();
+    this.chatModalClose.emit();
   }
 
   render() {
@@ -81,14 +81,8 @@ export class ModalLogin implements ComponentInterface {
               size-md="8"
             >
               <fireenjin-form hideControls>
-                <fireenjin-input 
-                  required name="email" 
-                  label="E-mail" 
-                  labelPosition="stacked" 
-                  type="email" 
-                  />
-                <ion-button 
-                type="submit">Send Login E-mail</ion-button>
+                <fireenjin-input required name="email" label="E-mail" labelPosition="stacked" type="email" />
+                <ion-button type="submit">Send Login E-mail</ion-button>
               </fireenjin-form>
             </ion-col>
           </ion-row>
