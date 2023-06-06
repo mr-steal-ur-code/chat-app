@@ -42,6 +42,12 @@ body {
   background:#9d9fa6
 }
 
+ion-menu {
+  --side-min-width: 300px !important;
+  --side-max-width: 300px !important;
+  --width: 300px !important;
+}
+
 :root {
   --ion-color-primary: #3880ff;
   --ion-color-primary-rgb: 56, 128, 255;

@@ -95,7 +95,7 @@ export class AppRouter implements ComponentInterface {
         <ion-route url="/chat" component="page-chat-list"></ion-route>
         <ion-route url="/chat/:chatId" component="page-chat"></ion-route>
       </ion-router>,
-      <rooms-app />,
+      <chat-app />,
     ];
   }
 }

@@ -1,8 +1,12 @@
 {
   "name": "chat-app",
-  "private": true,
   "version": "0.0.1",
   "description": "Stencil Ionic App Starter",
+  "private": true,
+  "module": "./dist/index.js",
+  "main": "./dist/index.cjs.js",
+  "collection": "./dist/collection/collection-manifest.json",
+  "types": "./dist/types/components.d.ts",
   "scripts": {
     "build": "stencil build",
     "env": "fireenjin env",
@@ -20,7 +24,7 @@
     "@fireenjin/editor": "^1.3.29",
     "@fireenjin/mx": "^1.1.44",
     "@fireenjin/sdk": "^1.4.6",
-    "@ionic/core": "6.7.3",
+    "@ionic/core": "6.7.4",
     "@stencil/store": "^2.0.8",
     "firebase": "^9.22.1"
   },
@@ -33,7 +37,8 @@
     "jest": "~27.0.3",
     "jest-cli": "~27.4.5",
     "puppeteer": "^20.4.0",
-    "typescript": "^5.1.3"
+    "typescript": "^5.0.4",
+    "firebase-tools": "^12.2.1"
   },
   "license": "MIT"
 }

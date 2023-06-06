@@ -6,8 +6,11 @@
  */
 import { HTMLStencilElement, JSXBase } from "@stencil/core/internal";
 import { AuthService, DatabaseService } from "@fireenjin/sdk";
+export { AuthService, DatabaseService } from "@fireenjin/sdk";
 export namespace Components {
     interface AppRouter {
+    }
+    interface ChatApp {
     }
     interface ModalLogin {
         "auth": AuthService;
@@ -24,10 +27,6 @@ export namespace Components {
     interface PageProfile {
         "name": string;
     }
-    interface RoomsApp {
-    }
-    interface UsersApp {
-    }
 }
 export interface ModalLoginCustomEvent<T> extends CustomEvent<T> {
     detail: T;
@@ -43,6 +42,12 @@ declare global {
     var HTMLAppRouterElement: {
         prototype: HTMLAppRouterElement;
         new (): HTMLAppRouterElement;
+    };
+    interface HTMLChatAppElement extends Components.ChatApp, HTMLStencilElement {
+    }
+    var HTMLChatAppElement: {
+        prototype: HTMLChatAppElement;
+        new (): HTMLChatAppElement;
     };
     interface HTMLModalLoginElement extends Components.ModalLogin, HTMLStencilElement {
     }
@@ -74,31 +79,20 @@ declare global {
         prototype: HTMLPageProfileElement;
         new (): HTMLPageProfileElement;
     };
-    interface HTMLRoomsAppElement extends Components.RoomsApp, HTMLStencilElement {
-    }
-    var HTMLRoomsAppElement: {
-        prototype: HTMLRoomsAppElement;
-        new (): HTMLRoomsAppElement;
-    };
-    interface HTMLUsersAppElement extends Components.UsersApp, HTMLStencilElement {
-    }
-    var HTMLUsersAppElement: {
-        prototype: HTMLUsersAppElement;
-        new (): HTMLUsersAppElement;
-    };
     interface HTMLElementTagNameMap {
         "app-router": HTMLAppRouterElement;
+        "chat-app": HTMLChatAppElement;
         "modal-login": HTMLModalLoginElement;
         "page-chat": HTMLPageChatElement;
         "page-chat-list": HTMLPageChatListElement;
         "page-home": HTMLPageHomeElement;
         "page-profile": HTMLPageProfileElement;
-        "rooms-app": HTMLRoomsAppElement;
-        "users-app": HTMLUsersAppElement;
     }
 }
 declare namespace LocalJSX {
     interface AppRouter {
+    }
+    interface ChatApp {
     }
     interface ModalLogin {
         "auth"?: AuthService;
@@ -117,19 +111,14 @@ declare namespace LocalJSX {
     interface PageProfile {
         "name"?: string;
     }
-    interface RoomsApp {
-    }
-    interface UsersApp {
-    }
     interface IntrinsicElements {
         "app-router": AppRouter;
+        "chat-app": ChatApp;
         "modal-login": ModalLogin;
         "page-chat": PageChat;
         "page-chat-list": PageChatList;
         "page-home": PageHome;
         "page-profile": PageProfile;
-        "rooms-app": RoomsApp;
-        "users-app": UsersApp;
     }
 }
 export { LocalJSX as JSX };
@@ -137,13 +126,12 @@ declare module "@stencil/core" {
     export namespace JSX {
         interface IntrinsicElements {
             "app-router": LocalJSX.AppRouter & JSXBase.HTMLAttributes<HTMLAppRouterElement>;
+            "chat-app": LocalJSX.ChatApp & JSXBase.HTMLAttributes<HTMLChatAppElement>;
             "modal-login": LocalJSX.ModalLogin & JSXBase.HTMLAttributes<HTMLModalLoginElement>;
             "page-chat": LocalJSX.PageChat & JSXBase.HTMLAttributes<HTMLPageChatElement>;
             "page-chat-list": LocalJSX.PageChatList & JSXBase.HTMLAttributes<HTMLPageChatListElement>;
             "page-home": LocalJSX.PageHome & JSXBase.HTMLAttributes<HTMLPageHomeElement>;
             "page-profile": LocalJSX.PageProfile & JSXBase.HTMLAttributes<HTMLPageProfileElement>;
-            "rooms-app": LocalJSX.RoomsApp & JSXBase.HTMLAttributes<HTMLRoomsAppElement>;
-            "users-app": LocalJSX.UsersApp & JSXBase.HTMLAttributes<HTMLUsersAppElement>;
         }
     }
 }

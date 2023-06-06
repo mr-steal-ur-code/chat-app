@@ -1,16 +1,15 @@
 import { Component, h } from '@stencil/core';
 
 @Component({
-  tag: 'rooms-app',
-  styleUrl: 'rooms-app.css',
+  tag: 'chat-app',
 })
-export class roomApp {
+export class chatApp {
   render() {
     return (
       <ion-app>
-        <ion-split-pane when={window?.screen?.availWidth > 920 ? true : false} content-id="rooms-content">
-          <ion-router-outlet id="rooms-content"></ion-router-outlet>
-          <ion-menu content-id="rooms-content" side="start">
+        <ion-split-pane when={window?.screen?.availWidth > 920 ? true : false} content-id="app-content">
+          <ion-router-outlet id="app-content"></ion-router-outlet>
+          <ion-menu content-id="app-content" side="start">
             <ion-header>
               <ion-toolbar color="primary">
                 <ion-title>Rooms</ion-title>
