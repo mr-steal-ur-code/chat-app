@@ -6,13 +6,14 @@
  */
 import { HTMLStencilElement, JSXBase } from "@stencil/core/internal";
 import { AuthService, DatabaseService } from "@fireenjin/sdk";
-export { AuthService, DatabaseService } from "@fireenjin/sdk";
 export namespace Components {
     interface AppRouter {
     }
     interface ModalLogin {
         "auth": AuthService;
         "userId": any;
+    }
+    interface PageChat {
     }
     interface PageChatList {
     }
@@ -49,6 +50,12 @@ declare global {
         prototype: HTMLModalLoginElement;
         new (): HTMLModalLoginElement;
     };
+    interface HTMLPageChatElement extends Components.PageChat, HTMLStencilElement {
+    }
+    var HTMLPageChatElement: {
+        prototype: HTMLPageChatElement;
+        new (): HTMLPageChatElement;
+    };
     interface HTMLPageChatListElement extends Components.PageChatList, HTMLStencilElement {
     }
     var HTMLPageChatListElement: {
@@ -82,6 +89,7 @@ declare global {
     interface HTMLElementTagNameMap {
         "app-router": HTMLAppRouterElement;
         "modal-login": HTMLModalLoginElement;
+        "page-chat": HTMLPageChatElement;
         "page-chat-list": HTMLPageChatListElement;
         "page-home": HTMLPageHomeElement;
         "page-profile": HTMLPageProfileElement;
@@ -96,6 +104,8 @@ declare namespace LocalJSX {
         "auth"?: AuthService;
         "onChatModalClose"?: (event: ModalLoginCustomEvent<any>) => void;
         "userId"?: any;
+    }
+    interface PageChat {
     }
     interface PageChatList {
     }
@@ -114,6 +124,7 @@ declare namespace LocalJSX {
     interface IntrinsicElements {
         "app-router": AppRouter;
         "modal-login": ModalLogin;
+        "page-chat": PageChat;
         "page-chat-list": PageChatList;
         "page-home": PageHome;
         "page-profile": PageProfile;
@@ -127,6 +138,7 @@ declare module "@stencil/core" {
         interface IntrinsicElements {
             "app-router": LocalJSX.AppRouter & JSXBase.HTMLAttributes<HTMLAppRouterElement>;
             "modal-login": LocalJSX.ModalLogin & JSXBase.HTMLAttributes<HTMLModalLoginElement>;
+            "page-chat": LocalJSX.PageChat & JSXBase.HTMLAttributes<HTMLPageChatElement>;
             "page-chat-list": LocalJSX.PageChatList & JSXBase.HTMLAttributes<HTMLPageChatListElement>;
             "page-home": LocalJSX.PageHome & JSXBase.HTMLAttributes<HTMLPageHomeElement>;
             "page-profile": LocalJSX.PageProfile & JSXBase.HTMLAttributes<HTMLPageProfileElement>;

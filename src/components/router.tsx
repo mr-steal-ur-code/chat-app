@@ -82,9 +82,9 @@ export class AppRouter implements ComponentInterface {
           console.log('User document already exists');
         }
       }
-      const routerEl = document.querySelector('ion-router');
-      if (!routerEl) return;
-      routerEl.push('/chat');
+      // const routerEl = document.querySelector('ion-router');
+      // if (!routerEl) return;
+      // routerEl.push('/chat');
     });
   }
 

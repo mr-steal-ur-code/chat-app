@@ -37,6 +37,10 @@
   More info about color theming using Ionic:
   https://ionicframework.com/docs/theming/color-generator
 */
+body {
+  position: relative;
+  background:#9d9fa6
+}
 
 :root {
   --ion-color-primary: #3880ff;
