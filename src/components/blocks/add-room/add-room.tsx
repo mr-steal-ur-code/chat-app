@@ -11,8 +11,8 @@ export class AddRoom implements ComponentInterface {
   onReset() {
     this.popoverEl.dismiss();
   }
-  @Listen('fireenjinSubmit', { target: 'body' })
-  onSubmit(event) {
+  @Listen('fireenjinSuccess', { target: 'body' })
+  onSuccess(event) {
     if (event?.detail?.endpoint === 'rooms') {
       this.popoverEl.dismiss();
     }
