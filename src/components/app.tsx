@@ -16,9 +16,8 @@ export class chatApp {
               </ion-toolbar>
             </ion-header>
             <ion-content scroll-events>
-              <h1>kaushdiuaeshdiu</h1>
-              <h1>sldkopwhdiu</h1>
-              <h1>kasdafwsdwehdiu</h1>
+              <add-room />
+              <page-room-list />
             </ion-content>
           </ion-menu>
         </ion-split-pane>

@@ -20,11 +20,11 @@
     "g": "fireenjin generate"
   },
   "dependencies": {
-    "@fireenjin/components": "^1.6.28",
+    "@fireenjin/components": "^1.6.29",
     "@fireenjin/editor": "^1.3.29",
     "@fireenjin/mx": "^1.1.44",
     "@fireenjin/sdk": "^1.4.6",
-    "@ionic/core": "6.7.4",
+    "@ionic/core": "6.7.3",
     "@stencil/store": "^2.0.8",
     "firebase": "^9.22.1"
   },
@@ -33,12 +33,11 @@
     "@fireenjin/docs": "^1.0.19",
     "@stencil/core": "^3.3.1",
     "@types/jest": "~27.0.3",
-    "ionicons": "^7.1.2",
     "jest": "~27.0.3",
     "jest-cli": "~27.4.5",
     "puppeteer": "^20.4.0",
-    "typescript": "^5.0.4",
-    "firebase-tools": "^12.2.1"
+    "typescript": "^5.1.3",
+    "firebase-tools": "^12.3.1"
   },
   "license": "MIT"
 }

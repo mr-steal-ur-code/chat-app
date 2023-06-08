@@ -1,16 +1,15 @@
 {
   "compilerOptions": {
-    "skipLibCheck": true,
     "forceConsistentCasingInFileNames": true,
     "importHelpers": true,
     "allowSyntheticDefaultImports": true,
     "allowUnreachableCode": false,
     "declaration": false,
     "experimentalDecorators": true,
-    "lib": ["dom", "es2018", "esnext.asynciterable"],
+    "lib": ["dom", "es2017"],
     "moduleResolution": "node",
     "module": "esnext",
-    "target": "es2018",
+    "target": "es2017",
     "noUnusedLocals": true,
     "noUnusedParameters": true,
     "jsx": "react",

@@ -12,6 +12,6 @@ export const config: Config = {
   ],
   sourceMap: false,
   taskQueue: 'async',
-  globalScript: 'src/global/app.ts',
-  globalStyle: 'src/global/app.css',
+  globalScript: 'src/app.ts',
+  globalStyle: 'src/app.css',
 };

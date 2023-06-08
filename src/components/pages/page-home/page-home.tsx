@@ -1,5 +1,5 @@
 import { Component, EventEmitter, Fragment, h, State, Event, Prop } from '@stencil/core';
-import state from '../../../global/store';
+import state from '../../../store';
 import { toastController } from '@ionic/core';
 import { AuthService, DatabaseService } from '@fireenjin/sdk';
 

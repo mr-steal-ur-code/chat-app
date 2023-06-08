@@ -2,7 +2,7 @@ import { AuthService, DatabaseService, FireEnjin } from '@fireenjin/sdk';
 import { Build, Component, ComponentInterface, Listen, h } from '@stencil/core';
 import { initializeApp } from 'firebase/app';
 import env from '../helpers/env';
-import state from '../global/store';
+import state from '../store';
 import pick from '../helpers/pick';
 import { modalController } from '@ionic/core';
 import UserModel from '../models/user';
@@ -11,6 +11,7 @@ import { User } from '../interfaces';
   tag: 'app-router',
 })
 export class AppRouter implements ComponentInterface {
+  modal: HTMLIonModalElement;
   app = Build.isBrowser ? initializeApp(env('firebase')) : null;
   auth = Build.isBrowser
     ? new AuthService({
@@ -41,7 +42,6 @@ export class AppRouter implements ComponentInterface {
     db: this.db,
     fireenjin: this.fireenjin,
   };
-  modal: HTMLIonModalElement;
 
   @Listen('chatModalOpen', { target: 'document' })
   async presentModal(event: CustomEvent) {
@@ -78,13 +78,20 @@ export class AppRouter implements ComponentInterface {
         try {
           const data = { id: session?.uid, email: session?.email };
           await this.db.add('users', data, session.uid);
+          const routerEl = document.querySelector('ion-router');
+          if (!routerEl) return;
+          routerEl.push('/chat');
         } catch {
           console.log('User document already exists');
         }
+
+        if (Build.isBrowser && ['/'].includes(window?.location?.pathname)) {
+          setTimeout(() => {
+            const routerEl = document.querySelector('ion-router');
+            if (routerEl?.push) routerEl.push('/chat');
+          }, 200);
+        }
       }
-      // const routerEl = document.querySelector('ion-router');
-      // if (!routerEl) return;
-      // routerEl.push('/chat');
     });
   }
 

@@ -11,6 +11,7 @@ export class PageChat {
         <fireenjin-form endpoint="messages" name="sendMessage">
           <fireenjin-input name="message" label="test" labelPosition="stacked" />
         </fireenjin-form>
+        <ion-icon name="trash" />
       </div>
     );
   }

@@ -1,4 +1,4 @@
-import state from '../global/store';
+import state from '../store';
 
 export default function isLoggedIn() {
   return state?.session;

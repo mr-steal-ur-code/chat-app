@@ -5,9 +5,13 @@
  * It contains typing information for all components that exist in this project.
  */
 import { HTMLStencilElement, JSXBase } from "@stencil/core/internal";
-import { AuthService, DatabaseService } from "@fireenjin/sdk";
-export { AuthService, DatabaseService } from "@fireenjin/sdk";
+import { AuthService, DatabaseService, FireEnjinFetchEvent } from "@fireenjin/sdk";
+import { Room } from "./interfaces";
+export { AuthService, DatabaseService, FireEnjinFetchEvent } from "@fireenjin/sdk";
+export { Room } from "./interfaces";
 export namespace Components {
+    interface AddRoom {
+    }
     interface AppRouter {
     }
     interface ChatApp {
@@ -27,6 +31,11 @@ export namespace Components {
     interface PageProfile {
         "name": string;
     }
+    interface PageRoomList {
+        "rooms": Room[];
+    }
+    interface PopoverAddRoom {
+    }
 }
 export interface ModalLoginCustomEvent<T> extends CustomEvent<T> {
     detail: T;
@@ -36,7 +45,17 @@ export interface PageHomeCustomEvent<T> extends CustomEvent<T> {
     detail: T;
     target: HTMLPageHomeElement;
 }
+export interface PageRoomListCustomEvent<T> extends CustomEvent<T> {
+    detail: T;
+    target: HTMLPageRoomListElement;
+}
 declare global {
+    interface HTMLAddRoomElement extends Components.AddRoom, HTMLStencilElement {
+    }
+    var HTMLAddRoomElement: {
+        prototype: HTMLAddRoomElement;
+        new (): HTMLAddRoomElement;
+    };
     interface HTMLAppRouterElement extends Components.AppRouter, HTMLStencilElement {
     }
     var HTMLAppRouterElement: {
@@ -79,7 +98,20 @@ declare global {
         prototype: HTMLPageProfileElement;
         new (): HTMLPageProfileElement;
     };
+    interface HTMLPageRoomListElement extends Components.PageRoomList, HTMLStencilElement {
+    }
+    var HTMLPageRoomListElement: {
+        prototype: HTMLPageRoomListElement;
+        new (): HTMLPageRoomListElement;
+    };
+    interface HTMLPopoverAddRoomElement extends Components.PopoverAddRoom, HTMLStencilElement {
+    }
+    var HTMLPopoverAddRoomElement: {
+        prototype: HTMLPopoverAddRoomElement;
+        new (): HTMLPopoverAddRoomElement;
+    };
     interface HTMLElementTagNameMap {
+        "add-room": HTMLAddRoomElement;
         "app-router": HTMLAppRouterElement;
         "chat-app": HTMLChatAppElement;
         "modal-login": HTMLModalLoginElement;
@@ -87,9 +119,13 @@ declare global {
         "page-chat-list": HTMLPageChatListElement;
         "page-home": HTMLPageHomeElement;
         "page-profile": HTMLPageProfileElement;
+        "page-room-list": HTMLPageRoomListElement;
+        "popover-add-room": HTMLPopoverAddRoomElement;
     }
 }
 declare namespace LocalJSX {
+    interface AddRoom {
+    }
     interface AppRouter {
     }
     interface ChatApp {
@@ -111,7 +147,14 @@ declare namespace LocalJSX {
     interface PageProfile {
         "name"?: string;
     }
+    interface PageRoomList {
+        "onFireenjinFetch"?: (event: PageRoomListCustomEvent<FireEnjinFetchEvent>) => void;
+        "rooms"?: Room[];
+    }
+    interface PopoverAddRoom {
+    }
     interface IntrinsicElements {
+        "add-room": AddRoom;
         "app-router": AppRouter;
         "chat-app": ChatApp;
         "modal-login": ModalLogin;
@@ -119,12 +162,15 @@ declare namespace LocalJSX {
         "page-chat-list": PageChatList;
         "page-home": PageHome;
         "page-profile": PageProfile;
+        "page-room-list": PageRoomList;
+        "popover-add-room": PopoverAddRoom;
     }
 }
 export { LocalJSX as JSX };
 declare module "@stencil/core" {
     export namespace JSX {
         interface IntrinsicElements {
+            "add-room": LocalJSX.AddRoom & JSXBase.HTMLAttributes<HTMLAddRoomElement>;
             "app-router": LocalJSX.AppRouter & JSXBase.HTMLAttributes<HTMLAppRouterElement>;
             "chat-app": LocalJSX.ChatApp & JSXBase.HTMLAttributes<HTMLChatAppElement>;
             "modal-login": LocalJSX.ModalLogin & JSXBase.HTMLAttributes<HTMLModalLoginElement>;
@@ -132,6 +178,8 @@ declare module "@stencil/core" {
             "page-chat-list": LocalJSX.PageChatList & JSXBase.HTMLAttributes<HTMLPageChatListElement>;
             "page-home": LocalJSX.PageHome & JSXBase.HTMLAttributes<HTMLPageHomeElement>;
             "page-profile": LocalJSX.PageProfile & JSXBase.HTMLAttributes<HTMLPageProfileElement>;
+            "page-room-list": LocalJSX.PageRoomList & JSXBase.HTMLAttributes<HTMLPageRoomListElement>;
+            "popover-add-room": LocalJSX.PopoverAddRoom & JSXBase.HTMLAttributes<HTMLPopoverAddRoomElement>;
         }
     }
 }

@@ -1,5 +1,5 @@
 import { createStore } from '@stencil/store';
-import setCache from '../helpers/setCache';
+import setCache from './helpers/setCache';
 
 const { state, onChange } = createStore({
   session: null,
