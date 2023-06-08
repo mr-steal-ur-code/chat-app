@@ -78,19 +78,19 @@ export class AppRouter implements ComponentInterface {
         try {
           const data = { id: session?.uid, email: session?.email };
           await this.db.add('users', data, session.uid);
-          const routerEl = document.querySelector('ion-router');
-          if (!routerEl) return;
-          routerEl.push('/chat');
+          // const routerEl = document.querySelector('ion-router');
+          // if (!routerEl) return;
+          // routerEl.push('/chat');
         } catch {
           console.log('User document already exists');
         }
 
-        if (Build.isBrowser && ['/'].includes(window?.location?.pathname)) {
-          setTimeout(() => {
-            const routerEl = document.querySelector('ion-router');
-            if (routerEl?.push) routerEl.push('/chat');
-          }, 200);
-        }
+        // if (Build.isBrowser && ['/'].includes(window?.location?.pathname)) {
+        //   setTimeout(() => {
+        //     const routerEl = document.querySelector('ion-router');
+        //     if (routerEl?.push) routerEl.push('/chat');
+        //   }, 200);
+        // }
       }
     });
   }
@@ -98,9 +98,19 @@ export class AppRouter implements ComponentInterface {
   render() {
     return [
       <ion-router useHash={false}>
-        <ion-route url="/" component="page-home" componentProps={this.componentProps} />
-        <ion-route url="/chat" component="page-chat-list"></ion-route>
-        <ion-route url="/chat/:chatId" component="page-chat"></ion-route>
+        <ion-route 
+          url="/" 
+          component="page-home" 
+          componentProps={this.componentProps} 
+          />
+        <ion-route 
+          url="/chat" 
+          component="page-chat-list"
+          />
+          <ion-route 
+          url="/chat/:roomId" 
+          component="page-chat"
+          />
       </ion-router>,
       <chat-app />,
     ];

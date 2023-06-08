@@ -6,9 +6,9 @@
  */
 import { HTMLStencilElement, JSXBase } from "@stencil/core/internal";
 import { AuthService, DatabaseService, FireEnjinFetchEvent } from "@fireenjin/sdk";
-import { Room } from "./interfaces";
+import { Message, Room } from "./interfaces";
 export { AuthService, DatabaseService, FireEnjinFetchEvent } from "@fireenjin/sdk";
-export { Room } from "./interfaces";
+export { Message, Room } from "./interfaces";
 export namespace Components {
     interface AddRoom {
     }
@@ -21,6 +21,8 @@ export namespace Components {
         "userId": any;
     }
     interface PageChat {
+        "db": DatabaseService;
+        "messages": Message[];
     }
     interface PageChatList {
     }
@@ -136,6 +138,8 @@ declare namespace LocalJSX {
         "userId"?: any;
     }
     interface PageChat {
+        "db"?: DatabaseService;
+        "messages"?: Message[];
     }
     interface PageChatList {
     }

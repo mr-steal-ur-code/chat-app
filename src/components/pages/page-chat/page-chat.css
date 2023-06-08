@@ -1,0 +1,138 @@
+html {
+    box-sizing: border-box;
+}
+
+*,
+*:before,
+*:after {
+    margin: 0;
+    padding: 0;
+    box-sizing: inherit;
+}
+
+body {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    font-family: Helvetica, sans-serif;
+    background: var(--ion-color-secondary) !important;
+}
+
+.msger {
+    display: flex;
+    flex-flow: column wrap;
+    justify-content: space-between;
+    width: calc(100% = 50px);
+    margin: 25px 10px;
+    height: calc(100% - 50px);
+    border: 2px solid var(--ion-color-secondary-shade);
+    border-radius: 5px;
+    background: var(--ion-color-primary);
+    box-shadow: 0 15px 15px -5px rgba(0, 0, 0, 0.2);
+}
+
+.msger-chat {
+    flex: 1;
+    overflow-y: auto;
+    padding: 10px;
+}
+
+.msger-chat::-webkit-scrollbar {
+    width: 6px;
+}
+
+.msger-chat::-webkit-scrollbar-track {
+    background: #ddd;
+}
+
+.msger-chat::-webkit-scrollbar-thumb {
+    background: #bdbdbd;
+}
+
+.msg {
+    display: flex;
+    align-items: flex-end;
+    margin-bottom: 10px;
+}
+
+.msg:last-of-type {
+    margin: 0;
+}
+
+.msg-img {
+    width: 50px;
+    height: 50px;
+    margin-right: 10px;
+    background: var(--ion-color-light-shade);
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: cover;
+    border-radius: 50%;
+}
+
+.msg-bubble {
+    max-width: 450px;
+    padding: 15px;
+    border-radius: 15px;
+    background: var(--ion-color-light);
+    border-bottom-left-radius: 0;
+}
+
+.msg-info {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 10px;
+}
+
+.msg-info-name {
+    margin-right: 10px;
+    font-weight: bold;
+}
+
+.msg-info-time {
+    font-size: 0.85em;
+}
+
+.msger-inputarea {
+    display: flex;
+    padding: 10px;
+    border-top: 2px solid var(--ion-color-medium-shade);
+    background: var(--ion-color-medium-tint);
+}
+
+.msger-inputarea * {
+    padding: 10px;
+    border: none;
+    border-radius: 3px;
+    font-size: 1em;
+}
+
+.msger-input {
+    flex: 1;
+    background: var(--ion-color-medium);
+    color: var(--ion-color-light-shade) !important;
+}
+
+.msger-input:focus {
+    outline: none;
+}
+
+.msger-send-btn {
+    margin-left: 10px;
+    background: var(--ion-color-secondary);
+    color: var(--ion-color-light);
+    font-weight: bold;
+    cursor: pointer;
+    transition: background 0.23s;
+}
+
+.msger-send-btn:hover {
+    
+    background: var(--ion-color-primary);
+}
+
+.msger-chat {
+    background-color: var(--ion-color-tertiary-shade);
+}

@@ -31,8 +31,8 @@ export class PageRoomList {
     console.log(this.rooms);
 
     return (
-      <ion-accordion-group multiple="true">
-        <ion-accordion>
+      <ion-accordion-group multiple="true" value={['voice', 'text']}>
+        <ion-accordion value="voice" toggleIconSlot="start">
           <ion-item color="secondary" slot="header">
             <ion-label>Voice Rooms</ion-label>
           </ion-item>
@@ -40,11 +40,11 @@ export class PageRoomList {
             ?.filter(([_i, room]) => room?.type === 'voice')
             ?.map(([_i, room]) => (
               <div slot="content">
-                <ion-item button="true">{room?.name || 'uh oh! no name'}</ion-item>
+                <ion-item button={true}>{room?.name || 'uh oh! no name'}</ion-item>
               </div>
             ))}
         </ion-accordion>
-        <ion-accordion style={{ marginTop: '50px' }}>
+        <ion-accordion value="text" toggleIconSlot="start" style={{ marginTop: '50px' }}>
           <ion-item color="secondary" slot="header">
             <ion-label>Text Rooms</ion-label>
           </ion-item>
@@ -52,7 +52,7 @@ export class PageRoomList {
             ?.filter(([_i, room]) => room?.type === 'text')
             ?.map(([_i, room]) => (
               <div slot="content">
-                <ion-item button="true">{room?.name || 'uh oh! no name'}</ion-item>
+                <ion-item button={true}>{room?.name || 'uh oh! no name'}</ion-item>
               </div>
             ))}
         </ion-accordion>

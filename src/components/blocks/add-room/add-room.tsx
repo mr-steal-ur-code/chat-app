@@ -30,8 +30,8 @@ export class AddRoom implements ComponentInterface {
     return (
       <ion-item>
         <ion-text>Create Room</ion-text>
-        <ion-button onClick={event => this.openAddRoomPopover(event)} style={{ paddingLeft: '10px' }}>
-          <ion-icon slot="icon-only" name="add-circle"></ion-icon>
+        <ion-button fill="clear" onClick={event => this.openAddRoomPopover(event)} style={{ paddingLeft: '10px' }}>
+          <ion-icon color="medium" slot="icon-only" name="add-circle"></ion-icon>
         </ion-button>
       </ion-item>
     );
