@@ -25,7 +25,7 @@ export interface User {
   email?: string;
   role?: string;
   photo?: string;
-  createdAt?: Timestamp;
+  createdAt?: Date;
 }
 
 export interface Message {
@@ -40,6 +40,6 @@ export interface Room {
   name?: string;
   type?: 'voice' | 'text';
   icon?: any;
-  createdBy?: User;
-  createdAt?: Timestamp;
+  createdBy?: any;
+  createdAt?: Date;
 }

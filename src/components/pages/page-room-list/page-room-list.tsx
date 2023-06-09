@@ -1,5 +1,5 @@
 import { FireEnjinFetchEvent } from '@fireenjin/sdk';
-import { Component, EventEmitter, h, Event, Listen, Prop, Build } from '@stencil/core';
+import { Component, EventEmitter, h, Event, Listen, Build, State } from '@stencil/core';
 import { Room } from '../../../interfaces';
 
 @Component({
@@ -9,11 +9,21 @@ import { Room } from '../../../interfaces';
 export class PageRoomList {
   @Event() fireenjinFetch: EventEmitter<FireEnjinFetchEvent>;
 
-  @Prop() rooms: Room[];
+  @State() rooms: Room[];
 
   @Listen('fireenjinSuccess')
   onSuccess(event) {
     if (event?.detail?.endpoint === 'rooms') this.rooms = event?.detail?.data;
+  }
+
+  // joinVoice(roomId) {
+  //   const routerEl = document.querySelector('ion-router');
+  //   if (routerEl) routerEl.push(`/voice/${roomId}`);
+  // }
+
+  joinText(roomId) {
+    const routerEl = document.querySelector('ion-router');
+    if (routerEl) routerEl.push(`/chat/${roomId}`);
   }
 
   fetchRooms() {
@@ -28,8 +38,6 @@ export class PageRoomList {
   }
 
   render() {
-    console.log(this.rooms);
-
     return (
       <ion-accordion-group multiple="true" value={['voice', 'text']}>
         <ion-accordion value="voice" toggleIconSlot="start">
@@ -40,7 +48,11 @@ export class PageRoomList {
             ?.filter(([_i, room]) => room?.type === 'voice')
             ?.map(([_i, room]) => (
               <div slot="content">
-                <ion-item button={true}>{room?.name || 'uh oh! no name'}</ion-item>
+                <ion-item
+                // onClick={() => this.joinVoice(room?.id)} button={true}
+                >
+                  {room?.name || 'uh oh! no name'}
+                </ion-item>
               </div>
             ))}
         </ion-accordion>
@@ -52,7 +64,9 @@ export class PageRoomList {
             ?.filter(([_i, room]) => room?.type === 'text')
             ?.map(([_i, room]) => (
               <div slot="content">
-                <ion-item button={true}>{room?.name || 'uh oh! no name'}</ion-item>
+                <ion-item onClick={() => this.joinText(room?.id)} button={true}>
+                  {room?.name || 'uh oh! no name'}
+                </ion-item>
               </div>
             ))}
         </ion-accordion>

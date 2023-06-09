@@ -10,15 +10,6 @@ html {
     box-sizing: inherit;
 }
 
-body {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 100vh;
-    font-family: Helvetica, sans-serif;
-    background: var(--ion-color-secondary) !important;
-}
-
 .msger {
     display: flex;
     flex-flow: column wrap;
@@ -54,6 +45,7 @@ body {
     display: flex;
     align-items: flex-end;
     margin-bottom: 10px;
+    padding-bottom: 15px;
 }
 
 .msg:last-of-type {
@@ -73,7 +65,7 @@ body {
 
 .msg-bubble {
     max-width: 450px;
-    padding: 15px;
+    padding: 10px;
     border-radius: 15px;
     background: var(--ion-color-light);
     border-bottom-left-radius: 0;
@@ -93,6 +85,10 @@ body {
 
 .msg-info-time {
     font-size: 0.85em;
+}
+
+.msg-text {
+   color: var(--ion-color-light-contrast)
 }
 
 .msger-inputarea {

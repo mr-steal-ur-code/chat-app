@@ -5,10 +5,10 @@
  * It contains typing information for all components that exist in this project.
  */
 import { HTMLStencilElement, JSXBase } from "@stencil/core/internal";
-import { AuthService, DatabaseService, FireEnjinFetchEvent } from "@fireenjin/sdk";
-import { Message, Room } from "./interfaces";
-export { AuthService, DatabaseService, FireEnjinFetchEvent } from "@fireenjin/sdk";
-export { Message, Room } from "./interfaces";
+import { AuthService, DatabaseService, FireEnjinFetchEvent, FireEnjinTriggerInput } from "@fireenjin/sdk";
+import { Message } from "./interfaces";
+export { AuthService, DatabaseService, FireEnjinFetchEvent, FireEnjinTriggerInput } from "@fireenjin/sdk";
+export { Message } from "./interfaces";
 export namespace Components {
     interface AddRoom {
     }
@@ -23,6 +23,7 @@ export namespace Components {
     interface PageChat {
         "db": DatabaseService;
         "messages": Message[];
+        "roomId": string;
     }
     interface PageChatList {
     }
@@ -34,7 +35,6 @@ export namespace Components {
         "name": string;
     }
     interface PageRoomList {
-        "rooms": Room[];
     }
     interface PopoverAddRoom {
     }
@@ -42,6 +42,10 @@ export namespace Components {
 export interface ModalLoginCustomEvent<T> extends CustomEvent<T> {
     detail: T;
     target: HTMLModalLoginElement;
+}
+export interface PageChatCustomEvent<T> extends CustomEvent<T> {
+    detail: T;
+    target: HTMLPageChatElement;
 }
 export interface PageHomeCustomEvent<T> extends CustomEvent<T> {
     detail: T;
@@ -140,6 +144,9 @@ declare namespace LocalJSX {
     interface PageChat {
         "db"?: DatabaseService;
         "messages"?: Message[];
+        "onFireenjinFetch"?: (event: PageChatCustomEvent<FireEnjinFetchEvent>) => void;
+        "onFireenjinTrigger"?: (event: PageChatCustomEvent<FireEnjinTriggerInput>) => void;
+        "roomId"?: string;
     }
     interface PageChatList {
     }
@@ -153,7 +160,6 @@ declare namespace LocalJSX {
     }
     interface PageRoomList {
         "onFireenjinFetch"?: (event: PageRoomListCustomEvent<FireEnjinFetchEvent>) => void;
-        "rooms"?: Room[];
     }
     interface PopoverAddRoom {
     }

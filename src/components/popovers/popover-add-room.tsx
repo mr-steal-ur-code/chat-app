@@ -6,7 +6,7 @@ import { Component, ComponentInterface, h } from '@stencil/core';
 export class PopoverAddRoom implements ComponentInterface {
   render() {
     return (
-      <fireenjin-form endpoint="rooms">
+      <fireenjin-form name="addRoom" endpoint="rooms">
         <fireenjin-input required name="name" label="Room Name" labelPosition="stacked" />
         <fireenjin-radios
           name="type"

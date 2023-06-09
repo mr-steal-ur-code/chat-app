@@ -43,6 +43,15 @@ export class AppRouter implements ComponentInterface {
     fireenjin: this.fireenjin,
   };
 
+  @Listen('fireenjinTrigger', { target: 'document' })
+  async onTrigger(event) {
+    const triggerName = event?.detail?.name;
+    const payload = event?.detail?.payload;
+    if (triggerName === 'chatMessage') {
+      await this.db?.add(payload?.collectionName, payload?.data);
+    }
+  }
+
   @Listen('chatModalOpen', { target: 'document' })
   async presentModal(event: CustomEvent) {
     this.modal = await modalController.create({
@@ -98,19 +107,9 @@ export class AppRouter implements ComponentInterface {
   render() {
     return [
       <ion-router useHash={false}>
-        <ion-route 
-          url="/" 
-          component="page-home" 
-          componentProps={this.componentProps} 
-          />
-        <ion-route 
-          url="/chat" 
-          component="page-chat-list"
-          />
-          <ion-route 
-          url="/chat/:roomId" 
-          component="page-chat"
-          />
+        <ion-route url="/" component="page-home" componentProps={this.componentProps} />
+        <ion-route url="/chat" component="page-chat-list" />
+        <ion-route url="/chat/:roomId" component="page-chat" />
       </ion-router>,
       <chat-app />,
     ];

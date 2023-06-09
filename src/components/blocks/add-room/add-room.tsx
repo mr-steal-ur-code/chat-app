@@ -13,7 +13,7 @@ export class AddRoom implements ComponentInterface {
   }
   @Listen('fireenjinSuccess', { target: 'body' })
   onSuccess(event) {
-    if (event?.detail?.endpoint === 'rooms') {
+    if (event?.detail?.endpoint === 'rooms' && event?.detail?.name === 'addRoom') {
       this.popoverEl.dismiss();
     }
   }
