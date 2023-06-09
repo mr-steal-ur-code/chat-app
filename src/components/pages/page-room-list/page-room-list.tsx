@@ -1,6 +1,6 @@
 import { FireEnjinFetchEvent } from '@fireenjin/sdk';
 import { Component, EventEmitter, h, Event, Listen, Build, State } from '@stencil/core';
-import { Room } from '../../../interfaces';
+import { textRoom } from '../../../interfaces';
 
 @Component({
   tag: 'page-room-list',
@@ -9,7 +9,7 @@ import { Room } from '../../../interfaces';
 export class PageRoomList {
   @Event() fireenjinFetch: EventEmitter<FireEnjinFetchEvent>;
 
-  @State() rooms: Room[];
+  @State() rooms: textRoom[];
 
   @Listen('fireenjinSuccess')
   onSuccess(event) {

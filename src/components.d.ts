@@ -6,9 +6,9 @@
  */
 import { HTMLStencilElement, JSXBase } from "@stencil/core/internal";
 import { AuthService, DatabaseService, FireEnjinFetchEvent, FireEnjinTriggerInput } from "@fireenjin/sdk";
-import { Message } from "./interfaces";
+import { Message, User } from "./interfaces";
 export { AuthService, DatabaseService, FireEnjinFetchEvent, FireEnjinTriggerInput } from "@fireenjin/sdk";
-export { Message } from "./interfaces";
+export { Message, User } from "./interfaces";
 export namespace Components {
     interface AddRoom {
     }
@@ -32,11 +32,15 @@ export namespace Components {
         "db": DatabaseService;
     }
     interface PageProfile {
-        "name": string;
+        "db": DatabaseService;
+        "user": User;
     }
     interface PageRoomList {
     }
     interface PopoverAddRoom {
+    }
+    interface PopoverEditProfile {
+        "user": User;
     }
 }
 export interface ModalLoginCustomEvent<T> extends CustomEvent<T> {
@@ -50,6 +54,10 @@ export interface PageChatCustomEvent<T> extends CustomEvent<T> {
 export interface PageHomeCustomEvent<T> extends CustomEvent<T> {
     detail: T;
     target: HTMLPageHomeElement;
+}
+export interface PageProfileCustomEvent<T> extends CustomEvent<T> {
+    detail: T;
+    target: HTMLPageProfileElement;
 }
 export interface PageRoomListCustomEvent<T> extends CustomEvent<T> {
     detail: T;
@@ -116,6 +124,12 @@ declare global {
         prototype: HTMLPopoverAddRoomElement;
         new (): HTMLPopoverAddRoomElement;
     };
+    interface HTMLPopoverEditProfileElement extends Components.PopoverEditProfile, HTMLStencilElement {
+    }
+    var HTMLPopoverEditProfileElement: {
+        prototype: HTMLPopoverEditProfileElement;
+        new (): HTMLPopoverEditProfileElement;
+    };
     interface HTMLElementTagNameMap {
         "add-room": HTMLAddRoomElement;
         "app-router": HTMLAppRouterElement;
@@ -127,6 +141,7 @@ declare global {
         "page-profile": HTMLPageProfileElement;
         "page-room-list": HTMLPageRoomListElement;
         "popover-add-room": HTMLPopoverAddRoomElement;
+        "popover-edit-profile": HTMLPopoverEditProfileElement;
     }
 }
 declare namespace LocalJSX {
@@ -156,12 +171,17 @@ declare namespace LocalJSX {
         "onChatModalOpen"?: (event: PageHomeCustomEvent<any>) => void;
     }
     interface PageProfile {
-        "name"?: string;
+        "db"?: DatabaseService;
+        "onFireenjinFetch"?: (event: PageProfileCustomEvent<FireEnjinFetchEvent>) => void;
+        "user"?: User;
     }
     interface PageRoomList {
         "onFireenjinFetch"?: (event: PageRoomListCustomEvent<FireEnjinFetchEvent>) => void;
     }
     interface PopoverAddRoom {
+    }
+    interface PopoverEditProfile {
+        "user"?: User;
     }
     interface IntrinsicElements {
         "add-room": AddRoom;
@@ -174,6 +194,7 @@ declare namespace LocalJSX {
         "page-profile": PageProfile;
         "page-room-list": PageRoomList;
         "popover-add-room": PopoverAddRoom;
+        "popover-edit-profile": PopoverEditProfile;
     }
 }
 export { LocalJSX as JSX };
@@ -190,6 +211,7 @@ declare module "@stencil/core" {
             "page-profile": LocalJSX.PageProfile & JSXBase.HTMLAttributes<HTMLPageProfileElement>;
             "page-room-list": LocalJSX.PageRoomList & JSXBase.HTMLAttributes<HTMLPageRoomListElement>;
             "popover-add-room": LocalJSX.PopoverAddRoom & JSXBase.HTMLAttributes<HTMLPopoverAddRoomElement>;
+            "popover-edit-profile": LocalJSX.PopoverEditProfile & JSXBase.HTMLAttributes<HTMLPopoverEditProfileElement>;
         }
     }
 }

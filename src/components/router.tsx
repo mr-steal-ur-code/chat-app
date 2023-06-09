@@ -7,6 +7,7 @@ import pick from '../helpers/pick';
 import { modalController } from '@ionic/core';
 import UserModel from '../models/user';
 import { User } from '../interfaces';
+import getCache from '../helpers/getCache';
 @Component({
   tag: 'app-router',
 })
@@ -15,26 +16,26 @@ export class AppRouter implements ComponentInterface {
   app = Build.isBrowser ? initializeApp(env('firebase')) : null;
   auth = Build.isBrowser
     ? new AuthService({
-        app: this.app,
-      })
+      app: this.app,
+    })
     : null;
   db = Build.isBrowser
     ? new DatabaseService({
-        app: this.app,
-        emulate: false,
-      })
+      app: this.app,
+      emulate: false,
+    })
     : null;
   fireenjin = Build.isBrowser
     ? new FireEnjin({
-        debug: true,
-        connections: [
-          {
-            db: this.db,
-            type: 'firebase',
-            url: 'https://chat-app-167c0.web.app/',
-          },
-        ],
-      })
+      debug: true,
+      connections: [
+        {
+          db: this.db,
+          type: 'firebase',
+          url: 'https://chat-app-167c0.web.app/',
+        },
+      ],
+    })
     : null;
   componentProps = {
     app: this.app,
@@ -68,19 +69,23 @@ export class AppRouter implements ComponentInterface {
   }
 
   async getProfile() {
-    state.profile = (await new UserModel(this.db).find(state?.session?.uid)) || ([] as User);
+    state.profile = (await new UserModel(this.db)
+      .find(state?.session?.uid) || [] as User);
   }
 
-  componentWillLoad() {
+  async componentWillLoad() {
+    if (!Build?.isBrowser) return;
+    state.profile = (await getCache("chatApp:profile")) || {};
+    state.claims = (await getCache("chatApp:claims")) || {};
     this.auth.onAuthChanged(async session => {
       state.session = session;
       this.getProfile();
       state.claims = session?.uid
         ? (pick(await this.auth.getClaims(), ['admin', 'tester', 'role']) as {
-            admin: boolean;
-            tester: boolean;
-            role: string;
-          })
+          admin: boolean;
+          tester: boolean;
+          role: string;
+        })
         : {};
       // IF LOGGED IN
       if (session?.uid) {

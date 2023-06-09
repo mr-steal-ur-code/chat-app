@@ -1,45 +1,76 @@
-import { Component, Fragment, h, Prop } from '@stencil/core';
+import { popoverController } from '@ionic/core';
+import { Build, Component, ComponentInterface, EventEmitter, h, Listen, Event, Prop } from '@stencil/core';
+import state from '../../../store';
+import { DatabaseService, FireEnjinFetchEvent } from '@fireenjin/sdk';
+import { User } from '../../../interfaces';
 
 @Component({
   tag: 'page-profile',
-  styleUrl: 'page-profile.css',
   // shadow: true,
 })
-export class PageProfile {
-  @Prop() name: string
+export class PageProfile implements ComponentInterface {
+  popoverEl: HTMLIonPopoverElement;
 
-  normalize(name: string): string {
-    name = name || ''
-    return name.slice(0, 1).toUpperCase() + name.slice(1).toLowerCase();
+  @Prop() user: User
+  @Prop() db: DatabaseService
+
+  @Event() fireenjinFetch: EventEmitter<FireEnjinFetchEvent>;
+
+  @Listen('fireenjinReset', { target: 'body' })
+  onReset() {
+    this.popoverEl.dismiss();
+  }
+  @Listen('fireenjinSuccess', { target: 'body' })
+  onSuccess(event) {
+    if (event?.detail?.endpoint === 'users') {
+      this.user = event?.detail?.data
+    }
+    if (event?.detail?.endpoint === 'users' && event?.detail?.name === 'editProfile') {
+      this.popoverEl.dismiss();
+    }
+  }
+
+  async openEditProfilePopover(event) {
+    this.popoverEl = await popoverController.create({
+      component: 'popover-edit-profile',
+      componentProps: {
+        user: this.user
+      },
+      event,
+    });
+    return this.popoverEl.present();
+  }
+
+  async findUser() {
+    this.fireenjinFetch.emit({
+      endpoint: 'users',
+      name: 'findUser',
+      params: {
+        id: state?.profile?.id,
+      }
+    });
+  }
+
+  componentDidLoad() {
+    if (!Build?.isBrowser) return;
+    this.findUser();
   }
 
   render() {
+    console.log(this.user, "user");
     return (
-      <Fragment>
-        <ion-header>
-          <ion-toolbar color="primary">
-            <ion-buttons slot="start">
-              <ion-back-button defaultHref="/tab/notice"></ion-back-button>
-            </ion-buttons>
-            <ion-title>Profile: {this.name}</ion-title>
-          </ion-toolbar>
-        </ion-header>
-        <ion-content fullscreen class="ion-padding">
-          <ion-card>
-            <ion-card-header>
-              <h1>
-                {this.normalize(this.name)}
-              </h1>
-            </ion-card-header>
-            <ion-card-content>
-              <p>
-                This name is passed in through a route param!
-              </p>
-            </ion-card-content>
-          </ion-card>
-        </ion-content>
-      </Fragment>
+      <ion-item>
+        <ion-text>{state?.profile?.userName}</ion-text>
+        <ion-button
+          fill="clear"
+          onClick={event => this.openEditProfilePopover(event)}
+          style={{ paddingLeft: '10px' }}>
+          <ion-icon
+            color="medium"
+            slot="icon-only"
+            name="create" />
+        </ion-button>
+      </ion-item>
     );
   }
-
 }

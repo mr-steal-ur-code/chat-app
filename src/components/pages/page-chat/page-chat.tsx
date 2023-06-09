@@ -37,13 +37,18 @@ export class PageChat {
       },
     });
     this.inputEl.value = '';
+    this.getMessages();
+  }
+
+  getMessages() {
+    this.fireenjinFetch.emit({
+      endpoint: `rooms/${this.roomId}/messages`,
+    });
   }
 
   componentDidLoad() {
     if (!Build?.isBrowser) return;
-    this.fireenjinFetch.emit({
-      endpoint: `rooms/${this.roomId}/messages`,
-    });
+    this.getMessages();
   }
 
   // componentDidLoad() {

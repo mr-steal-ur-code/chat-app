@@ -22,6 +22,7 @@ export interface User {
   id?: string;
   firstName?: string;
   lastName?: string;
+  userName?: string;
   email?: string;
   role?: string;
   photo?: string;
@@ -35,7 +36,16 @@ export interface Message {
   text?: string;
 }
 
-export interface Room {
+export interface textRoom {
+  id?: string;
+  name?: string;
+  type?: 'voice' | 'text';
+  icon?: any;
+  createdBy?: any;
+  createdAt?: Date;
+}
+
+export interface voiceRoom {
   id?: string;
   name?: string;
   type?: 'voice' | 'text';

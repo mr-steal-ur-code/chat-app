@@ -16,6 +16,7 @@ export class chatApp {
               </ion-toolbar>
             </ion-header>
             <ion-content scroll-events>
+              <page-profile />
               <add-room />
               <page-room-list />
             </ion-content>
