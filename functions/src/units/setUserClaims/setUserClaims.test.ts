@@ -7,14 +7,14 @@ describe('Set User Claims', () => {
   });
   it('Should Set a users claims on Firebase Auth', async () => {
     const response = await setUserClaims({
-      userId: 'bJNinURh0UNITOYqc055650re2S2',
+      userId: 'LRa13z6BIkWM5dKvFVeGHwwSVdS2',
       claims: {
-        role: 'subscriber',
-        admin: true,
+        admin: false,
         tester: true,
+        role: 'tester',
       },
     });
     console.log(response);
-    expect(response).toMatchObject({ uid: 'bJNinURh0UNITOYqc055650re2S2' });
+    expect(response).toMatchObject({ uid: 'LRa13z6BIkWM5dKvFVeGHwwSVdS2' });
   });
 });

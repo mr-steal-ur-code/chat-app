@@ -8,5 +8,11 @@ const setClaims = functions.https.onRequest((req, res) => {
     res.send(await setUserClaims(input));
   });
 });
+const getClaims = functions.https.onRequest((req, res) => {
+  return cors(req, res, async () => {
+    const input = req?.body || req?.params || req?.query;
+    res.send(await setUserClaims(input));
+  });
+});
 
-export { setClaims };
+export { setClaims, getClaims };
