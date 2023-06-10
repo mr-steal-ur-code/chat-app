@@ -9,6 +9,7 @@ import { User } from '../../../interfaces';
 })
 export class ItemProfile implements ComponentInterface {
   @Event() chatPopoverOpen: EventEmitter;
+  @Event() chatPopoverClose: EventEmitter;
 
   @Prop() user: User;
   @Prop() db: DatabaseService;
@@ -20,43 +21,52 @@ export class ItemProfile implements ComponentInterface {
   onSuccess(event) {
     if (event?.detail?.endpoint === 'users') {
       this.user = event?.detail?.data || {};
+      this.chatPopoverClose.emit();
     }
   }
 
-  async findUser() {
+  async findUser(id: string) {
     this.fireenjinFetch.emit({
       endpoint: 'users',
       name: 'findUser',
       params: {
-        id: state?.session?.uid || null,
+        id,
       },
     });
+    // const data = await this.db.find?.('users', id);
+    // state.users = { ...(state?.users || {}), [id]: data };
+    // await setCache('chatApp:users', state.users);
+    // if (!data) return null;
   }
 
-  componentDidLoad() {
+  async componentDidLoad() {
     if (!Build?.isBrowser) return;
     setTimeout(() => {
-      this.findUser();
-    }, 300);
+      this.findUser(state?.session?.uid);
+    }, 500);
   }
 
   render() {
     return (
       <ion-item>
         <ion-text>{state?.profile?.userName || state?.profile?.firstName || state?.profile?.lastName}</ion-text>
-        <ion-button
-          fill="clear"
-          onClick={() =>
-            this.chatPopoverOpen.emit({
-              component: 'popover-edit-profile',
-              componentProps: {
-                user: this.user,
-              },
-            })
-          }
-        >
-          <ion-icon color="medium" slot="icon-only" name="create" />
-        </ion-button>
+        {state?.session?.uid ? (
+          <ion-button
+            fill="clear"
+            onClick={() =>
+              this.chatPopoverOpen.emit({
+                component: 'popover-edit-profile',
+                componentProps: {
+                  user: this.user,
+                },
+              })
+            }
+          >
+            <ion-icon color="medium" slot="icon-only" name="create" />
+          </ion-button>
+        ) : (
+          <ion-button href={'/'}>login</ion-button>
+        )}
         {state.session?.uid && (
           <ion-button
             fill="clear"

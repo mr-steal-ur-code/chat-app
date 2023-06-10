@@ -40,7 +40,7 @@ export class PageRoomList {
   render() {
     return (
       <ion-accordion-group multiple="true" value={['voice', 'text']}>
-        <ion-accordion value="voice" toggleIconSlot="start">
+        <ion-accordion toggleIconSlot="start">
           <ion-item color="secondary" slot="header">
             <ion-label>Voice Rooms</ion-label>
           </ion-item>

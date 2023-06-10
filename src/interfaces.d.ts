@@ -16,6 +16,7 @@ export interface LocalCache {
     role?: string;
   };
   profile?: User;
+  users?: { [userId: string]: User };
 }
 
 export interface User {

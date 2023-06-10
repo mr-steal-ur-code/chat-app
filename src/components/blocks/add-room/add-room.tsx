@@ -1,5 +1,5 @@
 import { popoverController } from '@ionic/core';
-import { Component, ComponentInterface, Listen, h } from '@stencil/core';
+import { Component, ComponentInterface, EventEmitter, Listen, h, Event } from '@stencil/core';
 
 @Component({
   tag: 'add-room',
@@ -7,14 +7,17 @@ import { Component, ComponentInterface, Listen, h } from '@stencil/core';
 export class AddRoom implements ComponentInterface {
   popoverEl: HTMLIonPopoverElement;
 
+  @Event() chatPopoverClose: EventEmitter;
+  @Event() chatPopoverOpen: EventEmitter;
+
   @Listen('fireenjinReset', { target: 'body' })
   onReset() {
-    this.popoverEl.dismiss();
+    this.chatPopoverClose.emit();
   }
   @Listen('fireenjinSuccess', { target: 'body' })
   onSuccess(event) {
     if (event?.detail?.endpoint === 'rooms' && event?.detail?.name === 'addRoom') {
-      this.popoverEl.dismiss();
+      this.chatPopoverClose.emit();
     }
   }
 

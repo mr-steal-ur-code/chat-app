@@ -9,7 +9,7 @@ describe('Set User Claims', () => {
     const response = await setUserClaims({
       userId: 'bJNinURh0UNITOYqc055650re2S2',
       claims: {
-        role: 'tech',
+        role: 'subscriber',
         admin: true,
         tester: true,
       },

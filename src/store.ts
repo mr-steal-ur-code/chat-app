@@ -7,10 +7,11 @@ const { state, onChange } = createStore({
   roles: ['tester', 'tech', 'client', 'worker'],
   material: [],
   claims: null,
+  users: {},
 });
 
 onChange('session', value => {
-  console.log(value, 'session');
+  localStorage.setItem('chatApp:session', JSON.stringify(value));
 });
 
 onChange('claims', async value => {

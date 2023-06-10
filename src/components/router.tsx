@@ -1,17 +1,19 @@
 import { AuthService, DatabaseService, FireEnjin } from '@fireenjin/sdk';
 import { Build, Component, ComponentInterface, Listen, h } from '@stencil/core';
 import { initializeApp } from 'firebase/app';
+import { getIdTokenResult } from '@firebase/auth';
 import env from '../helpers/env';
 import state from '../store';
 import pick from '../helpers/pick';
 import { modalController, popoverController, toastController } from '@ionic/core';
-import UserModel from '../models/user';
-import { User } from '../interfaces';
 import getCache from '../helpers/getCache';
+import clearCache from '../helpers/clearCache';
+import { Timestamp } from '@firebase/firestore';
 @Component({
   tag: 'app-router',
 })
 export class AppRouter implements ComponentInterface {
+  routerEl = document.querySelector('ion-router');
   modal: HTMLIonModalElement;
   popover: HTMLIonPopoverElement;
   app = Build.isBrowser ? initializeApp(env('firebase')) : null;
@@ -68,8 +70,10 @@ export class AppRouter implements ComponentInterface {
       this.db.unsubscribe(event?.detail?.payload?.collection);
     } else if (event?.detail?.name === 'logout') {
       this.auth?.logout();
+      await this.db.clearWatchers();
+      await clearCache();
       this.presentToast();
-      setTimeout(() => window.location.reload(), 2000);
+      window.location.href = '/';
     }
   }
 
@@ -110,44 +114,80 @@ export class AppRouter implements ComponentInterface {
     toast.present();
   }
 
-  async getProfile() {
-    state.profile = (await new UserModel(this.db).find(state?.session?.uid)) || ([] as User);
+  async setUserClaims(session) {
+    const token = await getIdTokenResult(session, true);
+    state.claims = session?.uid
+      ? (pick(token.claims, ['admin', 'tester', 'role']) as {
+          admin: boolean;
+          tester: boolean;
+          role: string;
+        })
+      : {};
   }
 
   async componentWillLoad() {
     if (!Build?.isBrowser) return;
+    state.claims = (await getCache('chatApp:claims')) || {};
     this.auth.onAuthChanged(async session => {
       state.session = session;
-      this.getProfile();
-      state.claims = session?.uid
-        ? (pick(await this.auth.getClaims(), ['admin', 'tester', 'role']) as {
-            admin: boolean;
-            tester: boolean;
-            role: string;
-          })
-        : {};
-      // IF LOGGED IN
-      if (session?.uid) {
+      if (session && session?.uid) {
         try {
-          state.profile = (await getCache('chatApp:profile')) || {};
-          state.claims = (await getCache('chatApp:claims')) || {};
           const data = { id: session?.uid, email: session?.email };
           await this.db.add('users', data, session.uid);
         } catch {
           console.log('User document already exists');
         }
+        this.setUserClaims(session);
+        state.profile = (await getCache('chatApp:profile')) || null;
+        if (Build?.isBrowser && ['/'].includes(window?.location?.pathname)) {
+          setTimeout(() => {
+            window?.location?.assign('/chat');
+          }, 200);
+        }
       }
+      setTimeout(async () => {
+        try {
+          state.users = (await getCache('floodteam:users')) || {};
+        } catch (e) {
+          console.log('Error setting users cache', e);
+        }
+      });
+      if (typeof session?.uid !== 'string') return;
+      this.db.watchDocument('users', session.uid, async snapshot => {
+        if (snapshot?.data?.forceUpdate) {
+          await this.db.update('users', session?.uid, {
+            updatedAt: Timestamp.fromDate(new Date()),
+            forceUpdate: false,
+          });
+        }
+        state.profile = snapshot?.data || {
+          id: session?.uid,
+        };
+        setTimeout(() => {
+          this.setUserClaims(session);
+        }, 5000);
+      });
     });
   }
 
-  componentDidLoad() {
-    setTimeout(() => {
-      if (!state?.session?.uid) {
-        const routerEl = document.querySelector('ion-router');
-        if (!routerEl) return;
-        routerEl.push('/');
+  @Listen('ionRouteDidChange')
+  async onRouteDidChange(event) {
+    let stopLoader = true;
+    if (!Build.isBrowser) return false;
+    if (state?.session && state?.session?.uid) {
+      if (Build?.isBrowser && ['/'].includes(window?.location?.pathname)) {
+        setTimeout(() => {
+          if (this.routerEl) this.routerEl.push('/chat');
+        }, 200);
       }
-    }, 1100);
+    }
+    if (!state?.session?.uid && ['/chat'].indexOf(event.detail.to) >= 0) {
+      stopLoader = false;
+      if (this.routerEl) this.routerEl.push('/');
+    }
+    if (stopLoader) {
+      document.body.classList.add('is-loaded');
+    }
   }
 
   render() {

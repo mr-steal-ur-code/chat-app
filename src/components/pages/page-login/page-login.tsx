@@ -18,25 +18,11 @@ export class PageHome {
 
   async googleLogin() {
     await this.auth?.withSocial('google');
-    setTimeout(() => {
-      this.routerEl.push('/chat');
-    }, 1100);
   }
 
   redirect() {
     window?.location?.assign('/chat');
   }
-
-  // componentDidLoad() {
-  //   if (!this.routerEl) return;
-  //   this.routerEl?.addEventListener('ionRouteDidChange', () => {
-  //     setTimeout(() => {
-  //       if (state?.session) {
-  //         this.routerEl.push('/chat');
-  //       }
-  //     }, 1100);
-  //   });
-  // }
 
   render() {
     return (

@@ -50,6 +50,10 @@ export namespace Components {
     interface PopoverLogout {
     }
 }
+export interface AddRoomCustomEvent<T> extends CustomEvent<T> {
+    detail: T;
+    target: HTMLAddRoomElement;
+}
 export interface ItemProfileCustomEvent<T> extends CustomEvent<T> {
     detail: T;
     target: HTMLItemProfileElement;
@@ -171,6 +175,8 @@ declare global {
 }
 declare namespace LocalJSX {
     interface AddRoom {
+        "onChatPopoverClose"?: (event: AddRoomCustomEvent<any>) => void;
+        "onChatPopoverOpen"?: (event: AddRoomCustomEvent<any>) => void;
     }
     interface AppRouter {
     }
@@ -179,6 +185,7 @@ declare namespace LocalJSX {
     interface ItemProfile {
         "auth"?: AuthService;
         "db"?: DatabaseService;
+        "onChatPopoverClose"?: (event: ItemProfileCustomEvent<any>) => void;
         "onChatPopoverOpen"?: (event: ItemProfileCustomEvent<any>) => void;
         "onFireenjinFetch"?: (event: ItemProfileCustomEvent<FireEnjinFetchEvent>) => void;
         "user"?: User;
