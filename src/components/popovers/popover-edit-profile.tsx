@@ -12,6 +12,7 @@ export class PopoverEditProfile implements ComponentInterface {
             <fireenjin-form
                 name="editProfile"
                 endpoint="users"
+                resetButton='clear'
                 documentId={this.user?.id}
             >
                 <fireenjin-input

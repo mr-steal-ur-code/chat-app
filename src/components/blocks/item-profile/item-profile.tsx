@@ -19,7 +19,7 @@ export class ItemProfile implements ComponentInterface {
   @Listen('fireenjinSuccess', { target: 'body' })
   onSuccess(event) {
     if (event?.detail?.endpoint === 'users') {
-      this.user = event?.detail?.data;
+      this.user = event?.detail?.data || {};
     }
   }
 
@@ -28,20 +28,22 @@ export class ItemProfile implements ComponentInterface {
       endpoint: 'users',
       name: 'findUser',
       params: {
-        id: state?.profile?.id,
+        id: state?.session?.uid || null,
       },
     });
   }
 
   componentDidLoad() {
     if (!Build?.isBrowser) return;
-    this.findUser();
+    setTimeout(() => {
+      this.findUser();
+    }, 300);
   }
 
   render() {
     return (
       <ion-item>
-        <ion-text>{state?.profile?.userName}</ion-text>
+        <ion-text>{state?.profile?.userName || state?.profile?.firstName || state?.profile?.lastName}</ion-text>
         <ion-button
           fill="clear"
           onClick={() =>

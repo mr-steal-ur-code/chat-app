@@ -71,7 +71,7 @@ export class PageHome {
             <div>
               <h3>Logged in, redirecting</h3>
               <ion-button style={{ textTransform: 'capitalize' }} onClick={() => this.redirect()}>
-                Click here if not redirected
+                Redirect Myself
               </ion-button>
             </div>
           )}
