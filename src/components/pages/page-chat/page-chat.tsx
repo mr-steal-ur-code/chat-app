@@ -22,7 +22,12 @@ export class PageChat {
   @Listen('fireenjinSuccess')
   onSuccess(event) {
     if (event?.detail?.name === 'getMessages') {
-      this.messages = event?.detail?.data || [];
+      const messages = event?.detail?.data || [];
+      this.messages = messages?.sort?.((a, b) => {
+        var dateA = new Date(a?.createdAt?.toDate());
+        var dateB = new Date(b?.createdAt?.toDate());
+        return dateA < dateB ? 1 : -1;
+      });
       this.containerEl?.scrollTo({ top: this.containerEl?.scrollHeight, behavior: 'smooth' });
       this.containerEl?.scrollTo(0, this.containerEl?.scrollHeight);
       console.log('messages:', this.messages);
