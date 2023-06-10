@@ -28,9 +28,9 @@ export class PageChat {
         var dateB = new Date(b?.createdAt?.toDate());
         return dateA < dateB ? 1 : -1;
       });
-      this.containerEl?.scrollTo({ top: this.containerEl?.scrollHeight, behavior: 'smooth' });
-      this.containerEl?.scrollTo(0, this.containerEl?.scrollHeight);
-      console.log('messages:', this.messages);
+      setTimeout(() => {
+        this.scrollToBottom();
+      }, 50);
     }
   }
 
@@ -85,6 +85,12 @@ export class PageChat {
       name: 'getMessages',
       endpoint: `rooms/${this.roomId}/messages`,
     });
+  }
+
+  scrollToBottom() {
+    this.containerEl?.scrollTo({ top: this.containerEl?.scrollHeight, behavior: 'smooth' });
+    // this.containerEl?.scrollTo(0, this.containerEl?.scrollHeight);
+    //   console.log('messages:', this.messages);
   }
 
   render() {
