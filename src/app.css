@@ -59,6 +59,10 @@ ion-menu ion-item {
   --background:var(--ion-color-secondary-shade)
 }
 
+/* popover-logout, popover-add-room, popover-login-with-email, popover-edit-profile {
+  background: var(--ion-color-medium-tint)
+} */
+
 :root {
   --ion-color-primary: #546a92;
   --ion-color-primary-rgb: 84, 106, 146;

@@ -8,7 +8,9 @@ import state from '../../../store';
   styleUrl: 'page-chat.css',
 })
 export class PageChat {
+  routerEl = document?.querySelector('ion-router');
   inputEl: HTMLInputElement;
+  containerEl: HTMLElement;
 
   @Event() fireenjinTrigger: EventEmitter<FireEnjinTriggerInput>;
   @Event() fireenjinFetch: EventEmitter<FireEnjinFetchEvent>;
@@ -19,8 +21,42 @@ export class PageChat {
 
   @Listen('fireenjinSuccess')
   onSuccess(event) {
-    this.messages = event?.detail?.data || [];
-    console.log(this.messages, 'messages');
+    if (event?.detail?.name === 'getMessages') {
+      this.messages = event?.detail?.data || [];
+      this.containerEl?.scrollTo({ top: this.containerEl?.scrollHeight, behavior: 'smooth' });
+      this.containerEl?.scrollTo(0, this.containerEl?.scrollHeight);
+      console.log('messages:', this.messages);
+    }
+  }
+
+  async componentDidLoad() {
+    if (!Build?.isBrowser) return;
+    this.routerEl?.addEventListener('ionRouteDidChange', () => {
+      this.containerEl?.scrollTo(0, this.containerEl?.scrollHeight);
+    });
+    this.fireenjinTrigger.emit({
+      name: 'subscribe',
+      payload: {
+        collection: `rooms/${this.roomId}/messages`,
+        callback: () => {
+          this.getMessages();
+        },
+      },
+    });
+  }
+
+  disconnectedCallback() {
+    if (this.routerEl) {
+      this.routerEl?.removeEventListener('ionRouteDidChange', () => {
+        console.log('Listener Removed');
+      });
+    }
+    this.fireenjinTrigger.emit({
+      name: 'unsubscribe',
+      payload: {
+        collection: `rooms/${this.roomId}/messages`,
+      },
+    });
   }
 
   sendMessage(event) {
@@ -37,53 +73,32 @@ export class PageChat {
       },
     });
     this.inputEl.value = '';
-    this.getMessages();
   }
 
   getMessages() {
     this.fireenjinFetch.emit({
+      name: 'getMessages',
       endpoint: `rooms/${this.roomId}/messages`,
     });
   }
-
-  componentDidLoad() {
-    if (!Build?.isBrowser) return;
-    this.getMessages();
-  }
-
-  // componentDidLoad() {
-  //   if (!Build?.isBrowser) return;
-  //   this.db?.subscribe?.(
-  //     {
-  //       collectionName: `rooms/${this.roomId}/messages`,
-  //     },
-  //     ({ docs }) => {
-  //       this.messages = (docs || [])?.map(doc => ({
-  //         id: doc.id,
-  //         ...doc.data(),
-  //       }));
-  //     },
-  //   );
-  //   console.log('messages:', this.messages);
-  // }
 
   render() {
     return (
       <Fragment>
         <section class="msger">
-          <main class="msger-chat">
+          <main ref={el => (this.containerEl = el)} class="msger-chat">
             {Object.entries?.(this.messages || [])
               ?.reverse()
               ?.map(([_i, message]) => (
                 <div>
                   <div class="msg">
                     {/* loop profile icon here */}
-                    <div class="msg-img" style={{ 'background-image': 'url(https://image.flaticon.com/icons/svg/327/327779.svg)' }}></div>
+                    <div class="msg-img" style={{ 'background-image': 'url(https://www.lifespan.io/wp-content/uploads/2020/02/smiley.jpg)' }}></div>
 
                     <div class="msg-bubble">
                       <div class="msg-info">
                         <div class="msg-info-name">{message?.createdBy || 'no username'}</div>
-                        <div class="msg-info-time">{new Date(message?.createdAt?.seconds * 1000).toISOString().slice(11, 16)}</div>
+                        <div class="msg-info-time">{new Date(message?.createdAt?.seconds * 1000)?.toISOString()?.slice(11, 16)}</div>
                       </div>
                       {/* loop messages here */}
                       <div class="msg-text">{message?.text}</div>

@@ -18,22 +18,23 @@ export class PopoverEditProfile implements ComponentInterface {
                     type="text"
                     required
                     name="userName"
+                    placeholder="Enter Username"
                     label="Username"
                     labelPosition="stacked"
                     value={this?.user?.userName}
                 />
                 <fireenjin-input
                     type="text"
-                    required
                     name="firstName"
+                    placeholder="Enter First Name"
                     label="First Name"
                     labelPosition="stacked"
                     value={this.user?.firstName}
                 />
                 <fireenjin-input
                     type="text"
-                    required
                     name="lastName"
+                    placeholder="Enter Last Name"
                     label="Last Name"
                     labelPosition="stacked"
                     value={this?.user?.lastName}
@@ -42,6 +43,7 @@ export class PopoverEditProfile implements ComponentInterface {
                     type="email"
                     required
                     name="email"
+                    placeholder="name@example.com"
                     label="Email"
                     labelPosition="stacked"
                     value={this?.user?.email}

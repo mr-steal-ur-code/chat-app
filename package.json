@@ -24,7 +24,7 @@
     "@fireenjin/editor": "^1.3.29",
     "@fireenjin/mx": "^1.1.44",
     "@fireenjin/sdk": "^1.4.6",
-    "@ionic/core": "6.7.3",
+    "@ionic/core": "^6.7.4",
     "@stencil/store": "^2.0.8",
     "firebase": "^9.22.2"
   },

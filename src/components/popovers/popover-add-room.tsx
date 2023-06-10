@@ -7,7 +7,7 @@ export class PopoverAddRoom implements ComponentInterface {
   render() {
     return (
       <fireenjin-form name="addRoom" endpoint="rooms">
-        <fireenjin-input required name="name" label="Room Name" labelPosition="stacked" />
+        <fireenjin-input placeholder="new room name" required name="name" label="Room Name" labelPosition="stacked" />
         <fireenjin-radios
           name="type"
           required

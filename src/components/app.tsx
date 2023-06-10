@@ -12,11 +12,11 @@ export class chatApp {
           <ion-menu content-id="app-content" side="start">
             <ion-header>
               <ion-toolbar color="primary">
-                <ion-title style={{ paddingLeft: '1rem' }}>Rooms</ion-title>
+                <ion-title style={{ paddingLeft: '1rem' }}>Chat App</ion-title>
               </ion-toolbar>
             </ion-header>
             <ion-content scroll-events>
-              <page-profile />
+              <item-profile />
               <add-room />
               <page-room-list />
             </ion-content>
