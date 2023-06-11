@@ -2,7 +2,6 @@ import { Component, ComponentInterface, Prop, h } from '@stencil/core';
 import { User } from '../../interfaces';
 import isAdmin from '../../helpers/isAdmin';
 import state from '../../store';
-import { Timestamp } from "@firebase/firestore";
 
 @Component({
     tag: 'popover-edit-profile',
@@ -10,13 +9,11 @@ import { Timestamp } from "@firebase/firestore";
 export class PopoverEditProfile implements ComponentInterface {
     @Prop() user: User;
     render() {
-        const date = Timestamp.fromDate(new Date());
         return (
             <fireenjin-form
                 name="editProfile"
                 endpoint="users"
                 documentId={state?.session?.uid}
-                beforeSubmit={(data) => ({...data, updateAt: date })}
             >
                 <fireenjin-input
                     type="text"

@@ -10,11 +10,11 @@ import { AuthService, DatabaseService, FireEnjinFetchEvent, FireEnjinTriggerInpu
 export { Message, User } from "./interfaces";
 export { AuthService, DatabaseService, FireEnjinFetchEvent, FireEnjinTriggerInput } from "@fireenjin/sdk";
 export namespace Components {
-    interface AddRoom {
-    }
     interface AppRouter {
     }
     interface ChatApp {
+    }
+    interface ItemCreateRoom {
     }
     interface ItemProfile {
         "auth": AuthService;
@@ -40,6 +40,10 @@ export namespace Components {
     }
     interface PopoverAddRoom {
     }
+    interface PopoverChatOptions {
+        "id": string;
+        "roomId": string;
+    }
     interface PopoverEditProfile {
         "user": User;
     }
@@ -50,9 +54,9 @@ export namespace Components {
     interface PopoverLogout {
     }
 }
-export interface AddRoomCustomEvent<T> extends CustomEvent<T> {
+export interface ItemCreateRoomCustomEvent<T> extends CustomEvent<T> {
     detail: T;
-    target: HTMLAddRoomElement;
+    target: HTMLItemCreateRoomElement;
 }
 export interface ItemProfileCustomEvent<T> extends CustomEvent<T> {
     detail: T;
@@ -74,17 +78,15 @@ export interface PageRoomListCustomEvent<T> extends CustomEvent<T> {
     detail: T;
     target: HTMLPageRoomListElement;
 }
+export interface PopoverChatOptionsCustomEvent<T> extends CustomEvent<T> {
+    detail: T;
+    target: HTMLPopoverChatOptionsElement;
+}
 export interface PopoverLogoutCustomEvent<T> extends CustomEvent<T> {
     detail: T;
     target: HTMLPopoverLogoutElement;
 }
 declare global {
-    interface HTMLAddRoomElement extends Components.AddRoom, HTMLStencilElement {
-    }
-    var HTMLAddRoomElement: {
-        prototype: HTMLAddRoomElement;
-        new (): HTMLAddRoomElement;
-    };
     interface HTMLAppRouterElement extends Components.AppRouter, HTMLStencilElement {
     }
     var HTMLAppRouterElement: {
@@ -96,6 +98,12 @@ declare global {
     var HTMLChatAppElement: {
         prototype: HTMLChatAppElement;
         new (): HTMLChatAppElement;
+    };
+    interface HTMLItemCreateRoomElement extends Components.ItemCreateRoom, HTMLStencilElement {
+    }
+    var HTMLItemCreateRoomElement: {
+        prototype: HTMLItemCreateRoomElement;
+        new (): HTMLItemCreateRoomElement;
     };
     interface HTMLItemProfileElement extends Components.ItemProfile, HTMLStencilElement {
     }
@@ -139,6 +147,12 @@ declare global {
         prototype: HTMLPopoverAddRoomElement;
         new (): HTMLPopoverAddRoomElement;
     };
+    interface HTMLPopoverChatOptionsElement extends Components.PopoverChatOptions, HTMLStencilElement {
+    }
+    var HTMLPopoverChatOptionsElement: {
+        prototype: HTMLPopoverChatOptionsElement;
+        new (): HTMLPopoverChatOptionsElement;
+    };
     interface HTMLPopoverEditProfileElement extends Components.PopoverEditProfile, HTMLStencilElement {
     }
     var HTMLPopoverEditProfileElement: {
@@ -158,9 +172,9 @@ declare global {
         new (): HTMLPopoverLogoutElement;
     };
     interface HTMLElementTagNameMap {
-        "add-room": HTMLAddRoomElement;
         "app-router": HTMLAppRouterElement;
         "chat-app": HTMLChatAppElement;
+        "item-create-room": HTMLItemCreateRoomElement;
         "item-profile": HTMLItemProfileElement;
         "modal-login": HTMLModalLoginElement;
         "page-chat": HTMLPageChatElement;
@@ -168,19 +182,20 @@ declare global {
         "page-login": HTMLPageLoginElement;
         "page-room-list": HTMLPageRoomListElement;
         "popover-add-room": HTMLPopoverAddRoomElement;
+        "popover-chat-options": HTMLPopoverChatOptionsElement;
         "popover-edit-profile": HTMLPopoverEditProfileElement;
         "popover-login-with-email": HTMLPopoverLoginWithEmailElement;
         "popover-logout": HTMLPopoverLogoutElement;
     }
 }
 declare namespace LocalJSX {
-    interface AddRoom {
-        "onChatPopoverClose"?: (event: AddRoomCustomEvent<any>) => void;
-        "onChatPopoverOpen"?: (event: AddRoomCustomEvent<any>) => void;
-    }
     interface AppRouter {
     }
     interface ChatApp {
+    }
+    interface ItemCreateRoom {
+        "onChatPopoverClose"?: (event: ItemCreateRoomCustomEvent<any>) => void;
+        "onChatPopoverOpen"?: (event: ItemCreateRoomCustomEvent<any>) => void;
     }
     interface ItemProfile {
         "auth"?: AuthService;
@@ -198,6 +213,8 @@ declare namespace LocalJSX {
     interface PageChat {
         "db"?: DatabaseService;
         "messages"?: Message[];
+        "onChatPopoverClose"?: (event: PageChatCustomEvent<any>) => void;
+        "onChatPopoverOpen"?: (event: PageChatCustomEvent<any>) => void;
         "onFireenjinFetch"?: (event: PageChatCustomEvent<FireEnjinFetchEvent>) => void;
         "onFireenjinTrigger"?: (event: PageChatCustomEvent<FireEnjinTriggerInput>) => void;
         "roomId"?: string;
@@ -214,6 +231,11 @@ declare namespace LocalJSX {
     }
     interface PopoverAddRoom {
     }
+    interface PopoverChatOptions {
+        "id"?: string;
+        "onFireenjinTrigger"?: (event: PopoverChatOptionsCustomEvent<FireEnjinTriggerInput>) => void;
+        "roomId"?: string;
+    }
     interface PopoverEditProfile {
         "user"?: User;
     }
@@ -225,9 +247,9 @@ declare namespace LocalJSX {
         "onFireenjinTrigger"?: (event: PopoverLogoutCustomEvent<FireEnjinTriggerInput>) => void;
     }
     interface IntrinsicElements {
-        "add-room": AddRoom;
         "app-router": AppRouter;
         "chat-app": ChatApp;
+        "item-create-room": ItemCreateRoom;
         "item-profile": ItemProfile;
         "modal-login": ModalLogin;
         "page-chat": PageChat;
@@ -235,6 +257,7 @@ declare namespace LocalJSX {
         "page-login": PageLogin;
         "page-room-list": PageRoomList;
         "popover-add-room": PopoverAddRoom;
+        "popover-chat-options": PopoverChatOptions;
         "popover-edit-profile": PopoverEditProfile;
         "popover-login-with-email": PopoverLoginWithEmail;
         "popover-logout": PopoverLogout;
@@ -244,9 +267,9 @@ export { LocalJSX as JSX };
 declare module "@stencil/core" {
     export namespace JSX {
         interface IntrinsicElements {
-            "add-room": LocalJSX.AddRoom & JSXBase.HTMLAttributes<HTMLAddRoomElement>;
             "app-router": LocalJSX.AppRouter & JSXBase.HTMLAttributes<HTMLAppRouterElement>;
             "chat-app": LocalJSX.ChatApp & JSXBase.HTMLAttributes<HTMLChatAppElement>;
+            "item-create-room": LocalJSX.ItemCreateRoom & JSXBase.HTMLAttributes<HTMLItemCreateRoomElement>;
             "item-profile": LocalJSX.ItemProfile & JSXBase.HTMLAttributes<HTMLItemProfileElement>;
             "modal-login": LocalJSX.ModalLogin & JSXBase.HTMLAttributes<HTMLModalLoginElement>;
             "page-chat": LocalJSX.PageChat & JSXBase.HTMLAttributes<HTMLPageChatElement>;
@@ -254,6 +277,7 @@ declare module "@stencil/core" {
             "page-login": LocalJSX.PageLogin & JSXBase.HTMLAttributes<HTMLPageLoginElement>;
             "page-room-list": LocalJSX.PageRoomList & JSXBase.HTMLAttributes<HTMLPageRoomListElement>;
             "popover-add-room": LocalJSX.PopoverAddRoom & JSXBase.HTMLAttributes<HTMLPopoverAddRoomElement>;
+            "popover-chat-options": LocalJSX.PopoverChatOptions & JSXBase.HTMLAttributes<HTMLPopoverChatOptionsElement>;
             "popover-edit-profile": LocalJSX.PopoverEditProfile & JSXBase.HTMLAttributes<HTMLPopoverEditProfileElement>;
             "popover-login-with-email": LocalJSX.PopoverLoginWithEmail & JSXBase.HTMLAttributes<HTMLPopoverLoginWithEmailElement>;
             "popover-logout": LocalJSX.PopoverLogout & JSXBase.HTMLAttributes<HTMLPopoverLogoutElement>;

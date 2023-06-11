@@ -13,7 +13,10 @@ export class PageRoomList {
 
   @Listen('fireenjinSuccess')
   onSuccess(event) {
-    if (event?.detail?.endpoint === 'rooms') this.rooms = event?.detail?.data;
+    if (event?.detail?.endpoint === 'rooms') {
+      this.rooms = event?.detail?.data;
+      this.rooms = { ...this.rooms };
+    }
   }
 
   // joinVoice(roomId) {
@@ -40,7 +43,7 @@ export class PageRoomList {
   render() {
     return (
       <ion-accordion-group multiple="true" value={['voice', 'text']}>
-        <ion-accordion toggleIconSlot="start">
+        {/* <ion-accordion toggleIconSlot="start">
           <ion-item color="secondary" slot="header">
             <ion-label>Voice Rooms</ion-label>
           </ion-item>
@@ -55,7 +58,7 @@ export class PageRoomList {
                 </ion-item>
               </div>
             ))}
-        </ion-accordion>
+        </ion-accordion> */}
         <ion-accordion value="text" toggleIconSlot="start" style={{ marginTop: '50px' }}>
           <ion-item color="secondary" slot="header">
             <ion-label>Text Rooms</ion-label>

@@ -8,7 +8,6 @@ import pick from '../helpers/pick';
 import { modalController, popoverController, toastController } from '@ionic/core';
 import getCache from '../helpers/getCache';
 import clearCache from '../helpers/clearCache';
-import { Timestamp } from '@firebase/firestore';
 @Component({
   tag: 'app-router',
 })
@@ -47,14 +46,28 @@ export class AppRouter implements ComponentInterface {
     fireenjin: this.fireenjin,
   };
 
+  @Listen('fireenjinSuccess', { target: 'document' })
+  async onSuccess({ detail }) {
+    const data = detail?.data || {};
+    const id = data?.id;
+    this.popover?.dismiss();
+    if (detail?.name === 'addRoom') {
+      this.db?.update('rooms', id, { id: id, createdAt: new Date() });
+    } else if (detail?.name === 'editProfile') {
+      this.db?.update('users', id, { updatedAt: new Date() });
+    }
+  }
+
   @Listen('fireenjinTrigger', { target: 'document' })
   async onTrigger(event) {
     const triggerName = event?.detail?.name;
     const payload = event?.detail?.payload;
-    if (triggerName === 'chatMessage') {
+    if (triggerName === 'deleteChat') {
+      await this.db.delete(payload?.path, payload?.id);
+    } else if (triggerName === 'chatMessage') {
       await this.db?.add(payload?.collectionName, payload?.data);
     } else if (triggerName === 'subscribe') {
-      this.db.subscribe(
+      await this.db.subscribe(
         {
           collectionName: event?.detail?.payload?.collection,
           orderBy: 'createdAt:desc',
@@ -156,7 +169,7 @@ export class AppRouter implements ComponentInterface {
       this.db.watchDocument('users', session.uid, async snapshot => {
         if (snapshot?.data?.forceUpdate) {
           await this.db.update('users', session?.uid, {
-            updatedAt: Timestamp.fromDate(new Date()),
+            updatedAt: new Date(),
             forceUpdate: false,
           });
         }
@@ -195,7 +208,7 @@ export class AppRouter implements ComponentInterface {
       <ion-router useHash={false}>
         <ion-route url="/" component="page-login" componentProps={this.componentProps} />
         <ion-route url="/chat" component="page-chat-list" />
-        <ion-route url="/chat/:roomId" component="page-chat" />
+        <ion-route url="/chat/:roomId" component="page-chat" componentProps={this.componentProps} />
       </ion-router>,
       <chat-app />,
     ];

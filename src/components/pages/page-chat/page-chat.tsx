@@ -12,6 +12,8 @@ export class PageChat {
   inputEl: HTMLInputElement;
   containerEl: HTMLElement;
 
+  @Event() chatPopoverOpen: EventEmitter;
+  @Event() chatPopoverClose: EventEmitter;
   @Event() fireenjinTrigger: EventEmitter<FireEnjinTriggerInput>;
   @Event() fireenjinFetch: EventEmitter<FireEnjinFetchEvent>;
 
@@ -60,6 +62,16 @@ export class PageChat {
       name: 'unsubscribe',
       payload: {
         collection: `rooms/${this.roomId}/messages`,
+      },
+    });
+  }
+
+  openPopoverOptions(id: string, roomId: string) {
+    this.chatPopoverOpen.emit({
+      component: 'popover-chat-options',
+      componentProps: {
+        id,
+        roomId,
       },
     });
   }
@@ -114,6 +126,9 @@ export class PageChat {
                       {/* loop messages here */}
                       <div class="msg-text">{message?.text}</div>
                     </div>
+                    <ion-button onClick={() => this.openPopoverOptions(message?.id, this.roomId)} fill="clear">
+                      <ion-icon slot="icon-only" color="secondary" name="ellipsis-vertical-circle" />
+                    </ion-button>
                   </div>
                 </div>
               ))}

@@ -2,7 +2,7 @@ import { popoverController } from '@ionic/core';
 import { Component, ComponentInterface, EventEmitter, Listen, h, Event } from '@stencil/core';
 
 @Component({
-  tag: 'add-room',
+  tag: 'item-create-room',
 })
 export class AddRoom implements ComponentInterface {
   popoverEl: HTMLIonPopoverElement;
