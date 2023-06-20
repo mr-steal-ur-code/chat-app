@@ -66,8 +66,9 @@ export class PageChat {
     });
   }
 
-  openPopoverOptions(id: string, roomId: string) {
+  openPopoverOptions(event,id: string, roomId: string) {
     this.chatPopoverOpen.emit({
+      event,
       component: 'popover-chat-options',
       componentProps: {
         id,
@@ -126,7 +127,7 @@ export class PageChat {
                       {/* loop messages here */}
                       <div class="msg-text">{message?.text}</div>
                     </div>
-                    <ion-button onClick={() => this.openPopoverOptions(message?.id, this.roomId)} fill="clear">
+                    <ion-button onClick={(event) => this.openPopoverOptions(event,message?.id, this.roomId)} fill="clear">
                       <ion-icon slot="icon-only" color="secondary" name="ellipsis-vertical-circle" />
                     </ion-button>
                   </div>

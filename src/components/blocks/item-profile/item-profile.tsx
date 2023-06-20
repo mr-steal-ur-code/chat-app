@@ -53,8 +53,9 @@ export class ItemProfile implements ComponentInterface {
         {state?.session?.uid ? (
           <ion-button
             fill="clear"
-            onClick={() =>
+            onClick={(event) =>
               this.chatPopoverOpen.emit({
+                event,
                 component: 'popover-edit-profile',
                 componentProps: {
                   user: this.user,
@@ -70,8 +71,8 @@ export class ItemProfile implements ComponentInterface {
         {state.session?.uid && (
           <ion-button
             fill="clear"
-            onClick={() =>
-              this.chatPopoverOpen.emit({
+            onClick={(event) =>
+              this.chatPopoverOpen.emit({event,
                 component: 'popover-logout',
               })
             }
