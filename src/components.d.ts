@@ -74,6 +74,10 @@ export interface PageChatCustomEvent<T> extends CustomEvent<T> {
     detail: T;
     target: HTMLPageChatElement;
 }
+export interface PageChatListCustomEvent<T> extends CustomEvent<T> {
+    detail: T;
+    target: HTMLPageChatListElement;
+}
 export interface PageLoginCustomEvent<T> extends CustomEvent<T> {
     detail: T;
     target: HTMLPageLoginElement;
@@ -225,6 +229,7 @@ declare namespace LocalJSX {
         "roomId"?: string;
     }
     interface PageChatList {
+        "onForceUpdate"?: (event: PageChatListCustomEvent<any>) => void;
     }
     interface PageLogin {
         "auth"?: AuthService;
