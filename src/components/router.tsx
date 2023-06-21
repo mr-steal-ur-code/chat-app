@@ -46,6 +46,32 @@ export class AppRouter implements ComponentInterface {
     fireenjin: this.fireenjin,
   };
 
+  @Listen("forceUpdate", { target: "window" })
+  async onForceUpdate() {
+    const registrations = await navigator.serviceWorker.getRegistrations();
+    await Promise.all(registrations.map((r) => r.unregister()));
+    window.location.reload();
+  }
+
+  @Listen("swUpdate", { target: 'window' })
+async onServiceWorkerUpdate() {
+  const registration = await navigator.serviceWorker.getRegistration();
+
+  const toast = await toastController.create({
+    message: "New version available.",
+    buttons: [{ text: 'Reload', role: 'reload' }],
+    duration: 0
+  });
+
+  await toast.present();
+
+  const { role } = await toast.onWillDismiss();
+
+  if (role === 'reload') {
+    registration.waiting.postMessage("skipWaiting");
+  }
+}
+
   @Listen('fireenjinSuccess', { target: 'document' })
   async onSuccess({ detail }) {
     const data = detail?.data || {};
@@ -140,6 +166,19 @@ export class AppRouter implements ComponentInterface {
 
   async componentWillLoad() {
     if (!Build?.isBrowser) return;
+      if ('serviceWorker' in navigator) {
+        navigator.serviceWorker
+          .getRegistration()
+          .then(registration => {
+            if (registration?.active) {
+              navigator.serviceWorker.addEventListener(
+                'controllerchange',
+                () => window.location.reload()
+              );
+            }
+          })
+      }
+    
     state.claims = (await getCache('chatApp:claims')) || {};
     this.auth.onAuthChanged(async session => {
       state.session = session;
@@ -204,6 +243,7 @@ export class AppRouter implements ComponentInterface {
   }
 
   render() {
+    console.log(Notification.permission)
     return [
       <ion-router useHash={false}>
         <ion-route url="/" component="page-login" componentProps={this.componentProps} />

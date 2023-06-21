@@ -6,7 +6,7 @@ import { Component, EventEmitter, h, Event, Prop } from '@stencil/core';
 })
 export class PopoverLogout {
   @Event() fireenjinTrigger: EventEmitter<FireEnjinTriggerInput>;
-  @Prop() id: string;
+  @Prop() messageId: string;
   @Prop() roomId: string;
 
   render() {
@@ -18,7 +18,7 @@ export class PopoverLogout {
             name: 'deleteChat',
             payload: {
               path: `rooms/${this.roomId}/messages`,
-              id: this.id,
+              id: this.messageId,
             },
           })
         }

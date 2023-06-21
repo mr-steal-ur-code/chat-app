@@ -41,7 +41,7 @@ export namespace Components {
     interface PopoverAddRoom {
     }
     interface PopoverChatOptions {
-        "id": string;
+        "messageId": string;
         "roomId": string;
     }
     interface PopoverEditProfile {
@@ -53,6 +53,10 @@ export namespace Components {
     }
     interface PopoverLogout {
     }
+}
+export interface ChatAppCustomEvent<T> extends CustomEvent<T> {
+    detail: T;
+    target: HTMLChatAppElement;
 }
 export interface ItemCreateRoomCustomEvent<T> extends CustomEvent<T> {
     detail: T;
@@ -192,6 +196,7 @@ declare namespace LocalJSX {
     interface AppRouter {
     }
     interface ChatApp {
+        "onForceUpdate"?: (event: ChatAppCustomEvent<any>) => void;
     }
     interface ItemCreateRoom {
         "onChatPopoverClose"?: (event: ItemCreateRoomCustomEvent<any>) => void;
@@ -232,7 +237,7 @@ declare namespace LocalJSX {
     interface PopoverAddRoom {
     }
     interface PopoverChatOptions {
-        "id"?: string;
+        "messageId"?: string;
         "onFireenjinTrigger"?: (event: PopoverChatOptionsCustomEvent<FireEnjinTriggerInput>) => void;
         "roomId"?: string;
     }

@@ -1,9 +1,10 @@
-import { Component, h } from '@stencil/core';
+import { Component, EventEmitter, h, Event } from '@stencil/core';
 
 @Component({
   tag: 'chat-app',
 })
 export class chatApp {
+  @Event() forceUpdate: EventEmitter;
   render() {
     return (
       <ion-app>
@@ -13,6 +14,14 @@ export class chatApp {
             <ion-header>
               <ion-toolbar color="primary">
                 <ion-title style={{ paddingLeft: '1rem' }}>Chat App</ion-title>
+              <ion-button
+                title="Check for updates"
+                slot="start"
+                fill="clear"
+                onClick={() => this.forceUpdate.emit({})}
+              >
+                <ion-icon color="secondary" slot="icon-only" name="refresh-circle"/>
+              </ion-button>
               </ion-toolbar>
             </ion-header>
             <ion-content scroll-events>
