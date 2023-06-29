@@ -10,7 +10,10 @@ export class PageChatList {
     return <div>
       <h1>This page is blank 🤷‍♂️</h1>
       <div>adding crap to test service worker reload
-        <img src='./assets/icon/icon.png'/>
+        <img style={{width:"150px"}} src='./assets/icon/icon.png'/>
+      </div>
+      <div>adding more crap to test service worker reload
+        <img style={{width:"250px"}} src='./assets/icon/icon.png'/>
       </div>
     </div>;
   }
