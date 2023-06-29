@@ -50,7 +50,7 @@ export class AppRouter implements ComponentInterface {
   async onForceUpdate() {
     const registrations = await navigator.serviceWorker.getRegistrations();
     await Promise.all(registrations.map((r) => r.unregister()));
-    window.location.replace(window.location.href);
+    (window.location as any).reload(true);
   }
 
   @Listen("swUpdate", { target: 'window' })
