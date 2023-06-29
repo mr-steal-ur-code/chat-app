@@ -9,6 +9,9 @@ export class PageChatList {
   render() {
     return <div>
       <h1>This page is blank 🤷‍♂️</h1>
+      <div>adding crap to test service worker reload
+        <img src='./assets/icon/icon.png'/>
+      </div>
     </div>;
   }
 }
