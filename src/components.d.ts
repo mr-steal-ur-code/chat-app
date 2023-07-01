@@ -229,6 +229,7 @@ declare namespace LocalJSX {
         "roomId"?: string;
     }
     interface PageChatList {
+        "onFireenjinTrigger"?: (event: PageChatListCustomEvent<FireEnjinTriggerInput>) => void;
         "onForceUpdate"?: (event: PageChatListCustomEvent<any>) => void;
     }
     interface PageLogin {
