@@ -199,7 +199,7 @@ async onServiceWorkerUpdate() {
       }
       setTimeout(async () => {
         try {
-          state.users = (await getCache('floodteam:users')) || {};
+          state.users = (await getCache('chatApp:users')) || {};
         } catch (e) {
           console.log('Error setting users cache', e);
         }

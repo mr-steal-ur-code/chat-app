@@ -1,6 +1,6 @@
 import * as functions from 'firebase-functions';
 import setUserClaims from './units/setUserClaims/setUserClaims';
-import getUserClaims from './units/setUserClaims/setUserClaims';
+import getUserClaims from './units/getUserClaims/getUserClaims';
 
 const cors = require('cors')({ origin: true });
 const setClaims = functions.https.onRequest((req, res) => {
